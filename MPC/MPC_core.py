@@ -75,7 +75,7 @@ class MPC:
         self.ocp.model.u = self.controls
         self.ocp.model.disc_dyn_expr = f_discrete
         self.ocp.model.p = p
-        # self.ocp.parameter_values = np.zeros((num_params,))
+        self.ocp.parameter_values = np.zeros((num_params,))
 
         self.setup_hard_constraints()
         self.add_costs()
@@ -147,14 +147,14 @@ class MPC:
         cost = 0
 
         # Weights for different cost components
-        Q_obs = 10.0  # weight for obstacle avoidance
-        Q_goal = 10.0  # weight for goal reaching
+        Q_obs = 0.0  # weight for obstacle avoidance
+        Q_goal = 0.0  # weight for goal reaching
 
-        Q_terminal_goal = 5.0 # weight for terminal goal reaching
+        Q_terminal_goal = 0.0 # weight for terminal goal reaching
     
-        Q_input_a = 0.5  # weight for acceleration input
-        Q_input_delta = 0.5 # weight for steering input
-        Q_velocity = 4.0  # weight for velocity 
+        Q_input_a = 0.0  # weight for acceleration input
+        Q_input_delta = 0.0 # weight for steering input
+        Q_velocity = 10.0  # weight for velocity 
 
         # Cost for static obstacle avoidance
         for static_obs in self.static_obstacles:

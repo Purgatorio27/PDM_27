@@ -82,16 +82,16 @@ all_obstacle_ids = stat_body_ids + dyn_body_ids
 def vehicle_simulate_engine(state, control, dt):
     x, y, v, psi = state
     delta, a = control
+    beta = math.atan((lr / (lf + lr)) * math.tan(delta))
 
     # Kinematic bicycle model update
-    x_new = x + v * math.cos(psi) * dt
-    y_new = y + v * math.sin(psi) * dt
+    x_new = x + v * math.cos(psi + beta) * dt
+    y_new = y + v * math.sin(psi + beta) * dt
 
     v_new = v + a * dt
     # Apply speed limits (EXTRA SAFE CHECK)
     v_new = np.clip(v_new, min_speed, max_speed)
 
-    beta = math.atan((lr / (lf + lr)) * math.tan(delta))
     psi_new = psi + (v / lr) * math.sin(beta) * dt 
 
     return np.array([x_new, y_new, v_new, psi_new])
@@ -154,9 +154,9 @@ def __main__():
                 collided_indicator = True
                 break
         
-        # if collided_indicator is True:
-        #     print(f"*** At {step} step, (t={step*dt:.1f}s) Collision occurred! ***")
-        #     break
+        if collided_indicator is True:
+            print(f"*** At {step} step, (t={step*dt:.1f}s) Collision occurred! ***")
+            break
         
         # Check goal reached
         dist_to_goal = math.hypot(car_state[0] - goal[0], car_state[1] - goal[1])
