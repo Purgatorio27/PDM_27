@@ -3,12 +3,15 @@ import pybullet_data
 import time
 import numpy as np
 import math
+import json
+import os
+from datetime import datetime
 
 # Import existing modules
 from Obstacles import static_obstacles, dynamic_obstacles
 from Config import T, max_steps, dt, goal, lf, lr, vehicle_length, vehicle_width, vehicle_radius, \
     max_speed, min_speed, max_acceleration, max_deceleration, max_steering_angle, \
-    controller_dt, sim_dt, sim_speed
+    controller_dt, sim_dt, sim_speed, mpc_horizon, mpc_dt
 from MPC_core import MPC
 
 # Initialize PyBullet simulation
@@ -175,7 +178,7 @@ for d_obs in dynamic_obstacles:
         'radius': d_obs['radius']
     })
 
-mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon = 20, dt = dt)
+mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon=mpc_horizon, dt=mpc_dt)
 
 # Final simulation setup
 goal_tolerance = 0.3
@@ -183,28 +186,6 @@ goal_tolerance = 0.3
 # Debug visualization setup
 goal_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.5, rgbaColor=[0, 1, 0, 0.8])
 goal_body = p.createMultiBody(baseMass=0, baseVisualShapeIndex=goal_marker, basePosition=[goal[0], goal[1], 0.1])
-
-# Debug text ID for efficient updates
-debug_text_id = None
-
-def update_debug_params(car_state, control, dist_to_goal, min_obs_dist, solver_status, step):
-    """Update debug text overlay (more efficient than recreating parameters)"""
-    global debug_text_id
-
-    x, y, v, psi = car_state
-    delta, a = control
-
-    # Remove old text
-    if debug_text_id is not None:
-        p.removeUserDebugItem(debug_text_id)
-
-    # Create single debug text block
-    text = (f"Step:{step} | Pos:({x:.1f},{y:.1f}) | V:{v:.2f}m/s | Hdg:{np.degrees(psi):.0f}deg\n"
-            f"Steer:{np.degrees(delta):.1f}deg | Accel:{a:.2f} | Goal:{dist_to_goal:.1f}m | Obs:{min_obs_dist:.1f}m | Solver:{solver_status}")
-
-    debug_text_id = p.addUserDebugText(
-        text, [0, 0, 3], textColorRGB=[1, 1, 0], textSize=1.5
-    )
 
 
 def compute_min_obstacle_distance(car_pos, static_obs, dyn_obs_positions):
@@ -224,12 +205,68 @@ def compute_min_obstacle_distance(car_pos, static_obs, dyn_obs_positions):
     return min_dist
 
 
+def save_simulation_log(log_data):
+    """Save simulation log to JSON file"""
+    # Create logs directory if it doesn't exist
+    log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
+    # Generate filename with timestamp
+    timestamp = log_data['metadata']['start_time']
+    filename = f"simulation_log_{timestamp}.json"
+    filepath = os.path.join(log_dir, filename)
+    
+    # Save to JSON
+    with open(filepath, 'w') as f:
+        json.dump(log_data, f, indent=2)
+    
+    print(f"\n===== Simulation Log Saved =====")
+    print(f"File: {filepath}")
+    print(f"Total steps: {len(log_data['trajectory'])}")
+    print(f"Total time: {len(log_data['trajectory']) * log_data['metadata']['dt']:.2f}s")
+    
+    # Print summary statistics
+    if len(log_data['controls']) > 0:
+        velocities = [entry['state']['v'] for entry in log_data['controls']]
+        costs = [entry['solver']['cost'] for entry in log_data['controls'] if entry['solver']['cost'] > 0]
+        solver_times = [entry['solver']['solve_time_ms'] for entry in log_data['controls']]
+        
+        print(f"\n--- Statistics ---")
+        print(f"Velocity: min={min(velocities):.2f}, max={max(velocities):.2f}, avg={np.mean(velocities):.2f} m/s")
+        if costs:
+            print(f"Cost: min={min(costs):.2f}, max={max(costs):.2f}, avg={np.mean(costs):.2f}")
+        print(f"Solve time: min={min(solver_times):.2f}, max={max(solver_times):.2f}, avg={np.mean(solver_times):.2f} ms")
+        
+        # Count solver failures
+        solver_failures = sum(1 for entry in log_data['controls'] if entry['solver']['status'] != 0)
+        print(f"Solver failures: {solver_failures}/{len(log_data['controls'])} ({100*solver_failures/len(log_data['controls']):.1f}%)")
+    
+    return filepath
+
+
 # ======= Main Loop =======
 def __main__():
 
     # Initialize car state
     car_state = np.array([0.0, 0.0, 1.0, np.radians(45)])  # x, y, v, psi
     solver_status = 0
+    
+    # ===== Initialize Data Logger =====
+    simulation_log = {
+        'metadata': {
+            'start_time': datetime.now().strftime('%Y-%m-%d_%H-%M-%S'),
+            'goal': list(goal),
+            'max_speed': max_speed,
+            'min_speed': min_speed,
+            'dt': dt,
+            'static_obstacles': [{'position': list(obs['position']), 'radius': obs['radius']} for obs in static_obstacles],
+            'dynamic_obstacles_initial': [{'start_pos': list(obs['trajectory'][0][0:2]), 'radius': obs['radius']} for obs in dynamic_obstacles]
+        },
+        'trajectory': [],  # Actual vehicle trajectory
+        'mpc_predictions': [],  # MPC predicted trajectories
+        'controls': [],  # Control inputs
+        'solver_info': [],  # Solver status and timing
+    }
     
     # Deadlock detection variables
     low_speed_counter = 0
@@ -264,8 +301,82 @@ def __main__():
 
         mpc_controller.dynamic_obstacles = cur_dyn_obs_MPC
 
-        #Solve MPC
-        optimal_control, solver_status = mpc_controller.solve(cur_state_np)
+        #Solve MPC with debug for first 20 steps
+        solve_start_time = time.time()
+        debug_mode = (step < 20)
+        optimal_control, solver_status, debug_info = mpc_controller.solve(cur_state_np, debug=debug_mode)
+        solve_time = time.time() - solve_start_time
+        
+        # Print debug info for first few steps
+        if debug_mode and debug_info:
+            costs = debug_info.get('costs', {})
+            print(f"\n=== Step {step} Debug ===")
+            print(f"  State: x={car_state[0]:.2f}, y={car_state[1]:.2f}, v={car_state[2]:.2f}, psi={np.degrees(car_state[3]):.1f}°")
+            print(f"  Goal dist: {costs.get('goal_dist', -1):.2f}m, Heading error: {costs.get('heading_error_deg', -1):.1f}°")
+            print(f"  Control: steer={np.degrees(optimal_control[0]):.1f}°, accel={optimal_control[1]:.2f}")
+            print(f"  Total solver cost: {costs.get('total_solver_cost', -1):.2f}")
+            for oc in costs.get('obstacle_costs', []):
+                print(f"    Obstacle at {oc['pos']}: dist={oc['dist']:.2f}m, cost={oc['cost']:.4f}")
+            # Print predicted trajectory end
+            pred_traj = debug_info.get('predicted_trajectory', {})
+            if pred_traj:
+                print(f"  MPC pred end: ({pred_traj['x'][-1]:.2f}, {pred_traj['y'][-1]:.2f})")
+        
+        # ===== Log MPC Predicted Trajectory =====
+        mpc_predicted_traj = []
+        try:
+            for k in range(mpc_controller.N + 1):
+                pred_state = mpc_controller.solver.get(k, 'x')
+                mpc_predicted_traj.append(pred_state.tolist())
+        except:
+            pass  # Solver may not have valid solution
+        
+        # Get solver cost if available
+        try:
+            solver_cost = float(mpc_controller.solver.get_cost())
+        except:
+            solver_cost = -1.0
+        
+        # Log current step data
+        current_log_entry = {
+            'step': step,
+            'time': current_time,
+            'state': {
+                'x': float(car_state[0]),
+                'y': float(car_state[1]),
+                'v': float(car_state[2]),
+                'psi': float(car_state[3]),
+                'psi_deg': float(np.degrees(car_state[3]))
+            },
+            'control': {
+                'steering': float(optimal_control[0]),
+                'steering_deg': float(np.degrees(optimal_control[0])),
+                'acceleration': float(optimal_control[1])
+            },
+            'solver': {
+                'status': int(solver_status),
+                'solve_time_ms': solve_time * 1000,
+                'cost': solver_cost
+            },
+            'distances': {},
+            'deadlock_recovery': deadlock_recovery_mode
+        }
+        
+        simulation_log['trajectory'].append({
+            'step': step,
+            'x': float(car_state[0]),
+            'y': float(car_state[1]),
+            'v': float(car_state[2]),
+            'psi': float(car_state[3])
+        })
+        
+        if len(mpc_predicted_traj) > 0:
+            simulation_log['mpc_predictions'].append({
+                'step': step,
+                'predicted_trajectory': mpc_predicted_traj
+            })
+        
+        simulation_log['controls'].append(current_log_entry)
         
         # ===== Deadlock Detection and Recovery =====
         current_speed = abs(car_state[2])
@@ -319,10 +430,14 @@ def __main__():
         for d_obs in dynamic_obstacles:
             dyn_obs_positions.append(d_obs['trajectory'][obs_traj_idx][0:2])
         min_obs_dist = compute_min_obstacle_distance(car_state[0:2], static_obstacles, dyn_obs_positions)
-
-        # Update debug display (only every 5 steps for performance)
-        if step % 5 == 0:
-            update_debug_params(car_state, optimal_control, dist_to_goal, min_obs_dist, solver_status, step)
+        
+        # ===== Update log with distance info =====
+        if len(simulation_log['controls']) > 0:
+            simulation_log['controls'][-1]['distances'] = {
+                'to_goal': float(dist_to_goal),
+                'to_nearest_obstacle': float(min_obs_dist),
+                'collision': collided_indicator if 'collided_indicator' in dir() else False
+            }
 
         # Collision detection
         collided_indicator = False
@@ -340,6 +455,8 @@ def __main__():
         # Check goal reached
         if dist_to_goal < goal_tolerance:
             print(f"*** At {step} step, (t={step*dt:.1f}s) Goal reached! ***")
+            # Save log before exiting
+            save_simulation_log(simulation_log)
             time.sleep(2)
             break
 
@@ -347,7 +464,8 @@ def __main__():
         p.stepSimulation()
         time.sleep(0.01)  # small delay for visualization, increase if too fast
         
-    # End of simulation loop
+    # End of simulation loop - save log
+    save_simulation_log(simulation_log)
     print("Simulation ended.")
     p.disconnect()
 

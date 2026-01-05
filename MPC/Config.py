@@ -27,6 +27,11 @@ dt = controller_dt  # for backward compatibility
 max_steps = 5000  # maximum number of simulation steps
 T = controller_dt * max_steps  # total simulation time in seconds
 
+# MPC parameters
+mpc_horizon = 40  # prediction horizon steps
+mpc_dt = 0.25  # MPC time step (larger than controller_dt for longer lookahead)
+# Total lookahead = mpc_horizon * mpc_dt = 40 * 0.25 = 10 seconds = 40m at 4m/s
+
 
 
 
