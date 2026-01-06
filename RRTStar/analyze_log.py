@@ -7,18 +7,20 @@ from matplotlib.collections import LineCollection
 import glob
 
 
-ANALYZE_ALL = True
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(current_dir)
 
 
 def load_latest_log():
-    """Load the most recent simulation log"""
-    log_dir = os.path.join(os.getcwd(), 'logs')
-    log_files = glob.glob(os.path.join(log_dir, 'rrt_log_*.json'))
+    """Search through nested folders for the most recent simulation log"""
+    log_pattern = os.path.join(root_dir, 'logs', '*', '*', '*.json')
+    log_files = glob.glob(log_pattern)
     
     if not log_files:
-        print("No log files found in logs/ directory")
+        print(f"No log files found in {os.path.join(root_dir, 'logs')}")
         return None
     
+    # Sort by creation time to find the newest
     latest_file = max(log_files, key=os.path.getctime)
     print(f"Loading: {latest_file}")
     
@@ -32,25 +34,24 @@ def plot_rrt_results(log_data):
     goal = log_data['metadata']['goal_pos']
     start = log_data['metadata']['start_pose']
     
-    if 'planned_rrt_path' in log_data and log_data['planned_rrt_path']:
-        px = [p['x'] for p in log_data['planned_rrt_path']]
-        py = [p['y'] for p in log_data['planned_rrt_path']]
-        ax.plot(px, py, 'b--', alpha=0.6, linewidth=2, label='Planned RRT* Path')
-
+    # Plot Trajectory
     traj = log_data['executed_trajectory']
     tx = [t['x'] for t in traj]
     ty = [t['y'] for t in traj]
     
-    if 'v' in traj[0]:
+    # Use a color map for velocity if 'v' exists
+    if len(traj) > 0 and 'v' in traj[0]:
         v = [t['v'] for t in traj]
-
         points = np.array([tx, ty]).T.reshape(-1, 1, 2)
         segments = np.concatenate([points[:-1], points[1:]], axis=1)
-        norm = plt.Normalize(min(v), max(v))
-
-        lc = LineCollection(segments, cmap='viridis', norm=norm, linewidth=4, label='Executed Trajectory')
+        
+        # Avoid error if velocity is constant
+        v_min, v_max = min(v), max(v)
+        if v_min == v_max: v_max += 0.1
+        
+        norm = plt.Normalize(v_min, v_max)
+        lc = LineCollection(segments, cmap='viridis', norm=norm, linewidth=4)
         lc.set_array(np.array(v))
-
         ax.add_collection(lc)
         plt.colorbar(lc, ax=ax, label='Velocity (m/s)')
     else:
@@ -61,7 +62,8 @@ def plot_rrt_results(log_data):
     
     ax.set_xlabel('X (m)')
     ax.set_ylabel('Y (m)')
-    ax.set_title('RRT* Path Planning and Execution')
+    difficulty = log_data['metadata']['parameters'].get('difficulty', 'Unknown')
+    ax.set_title(f'RRT* Path Analysis: {difficulty} Maze')
     ax.legend()
     ax.grid(True, alpha=0.3)
     ax.set_aspect('equal')
@@ -71,8 +73,9 @@ def plot_rrt_results(log_data):
 def plot_velocity_profile(log_data):
     """Analyze velocity and heading over the steps"""
     traj = log_data['executed_trajectory']
+    if not traj: return None
+
     steps = [t['step'] for t in traj]
-    
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
     
     if 'v' in traj[0]:
@@ -85,7 +88,7 @@ def plot_velocity_profile(log_data):
     if 'yaw' in traj[0]:
         yaw = [np.degrees(t['yaw']) for t in traj]
         ax2.plot(steps, yaw, 'b-', linewidth=2)
-        ax2.set_ylabel('Heading (degrees)')
+        ax2.set_ylabel('Heading (deg)')
         ax2.set_xlabel('Trajectory Step')
         ax2.set_title('Vehicle Orientation (Yaw)')
         ax2.grid(True)
@@ -94,29 +97,26 @@ def plot_velocity_profile(log_data):
     return fig
 
 def print_rrt_summary(log_data):
-    """Print summary statistics"""
+    """Print summary statistics using updated keys"""
     meta = log_data['metadata']
-    traj = log_data['executed_trajectory']
     
     print("\n" + "="*60)
-    print("RRT* SIMULATION LOG SUMMARY")
+    print(f"RRT* SUMMARY: {meta['parameters'].get('difficulty', 'Unknown')} Maze")
     print("="*60)
 
     print(f"Start Pose: {meta['start_pose']}")
-    print(f"Goal Position: {meta['goal_pos']}")
+    print(f"Goal Pos:   {meta['goal_pos']}")
     
-    comp_time = meta.get('computation_time_sec', 0)
-    trav_time = meta.get('travel_time_sec', 0)
+    comp_time = meta.get('computation_time', 0)
+    trav_time = meta.get('travel_time', 0)
+    dist = meta.get('total_distance', 0)
     
-    print(f"Computation Time: {comp_time:.4f} seconds")
-    print(f"Travel Time: {trav_time:.2f} seconds")
+    print(f"Planning Time:   {comp_time:.4f} sec")
+    print(f"Execution Time:  {trav_time:.2f} sec")
+    print(f"Total Distance:  {dist:.2f} meters")
     
-    if len(traj) > 1:
-        dist = 0
-        for i in range(len(traj)-1):
-            dist += np.hypot(traj[i+1]['x'] - traj[i]['x'], traj[i+1]['y'] - traj[i]['y'])
-        print(f"Total Distance: {dist:.2f} meters")
-        print(f"Average Speed: {dist/trav_time:.2f} m/s" if trav_time > 0 else "N/A")
+    if trav_time > 0:
+        print(f"Average Speed:   {dist/trav_time:.2f} m/s")
     
     print("="*60)
 

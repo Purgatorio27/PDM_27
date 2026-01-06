@@ -23,11 +23,9 @@ def generate_trajectory(planner, smoothing_factor, target_velocity, max_attempts
         rrt_path = planner.plan(max_iter=max_iter)
         
         if rrt_path is not None:
-            print("Path found")
             break
     
     if rrt_path is None:
-        print(f"Path not found")
         return None, None
 
     smoothed_traj = smooth_trajectory(
@@ -65,7 +63,7 @@ def smooth_trajectory(RRT_path, smoothing_factor, target_velocity):
     return np.array(trajectory)
 
 
-def save_simulation_log(log_data):
+def save_simulation_log(log_data, filepath=None):
     end_time_dt = datetime.now()
     log_data['metadata']['end_time'] = end_time_dt.strftime('%Y-%m-%d_%H-%M-%S')
     
@@ -73,13 +71,13 @@ def save_simulation_log(log_data):
     duration = end_time_dt - start_time_dt
     log_data['metadata']['total_wall_time_sec'] = duration.total_seconds()
 
-    log_dir = os.path.join(os.getcwd(), 'logs')
-    os.makedirs(log_dir, exist_ok=True)
+    if filepath is None:
+        log_dir = os.path.join(os.getcwd(), 'logs')
+        os.makedirs(log_dir, exist_ok=True)
+        filepath = os.path.join(log_dir, f"rrt_log_{log_data['metadata']['start_time']}.json")
     
-    filename = f"rrt_log_{log_data['metadata']['start_time']}.json"
-    filepath = os.path.join(log_dir, filename)
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
     
     with open(filepath, 'w') as f:
         json.dump(log_data, f, indent=2)
-    
     return filepath
