@@ -16,50 +16,27 @@ class RRTStar:
         self.search_radius = 2.5
         self.car_radius = 0.45  # Safety margin around obstacles
 
-    # def collision_checker(self, x, y):
-    #     """
-    #     Docstring for collision_checker [TO DO]
-        
-    #     :param self: Description
-    #     :param x: Description
-    #     :param y: Description
-    #     """
-    #     if abs(x) > 12.2 or abs(y) > 12.2: return False  # Stay within walls
-
-    #     # Check if there is no collision for all obstacles
-    #     for obs in self.env.obstacles:
-    #         ox, oy = obs['pos']
-    #         dw, dh = obs['dim'][0]/2 + self.car_radius, obs['dim'][1]/2 + self.car_radius
-
-    #         if abs(x - ox) < dw and abs(y - oy) < dh:
-    #             return False
-    #     return True
-
     def collision_checker(self, x, y):
         """
-        Returns True if the point (x, y) is SAFE.
-        Returns False if it hits a wall or is Out of Bounds.
+        Docstring for collision_checker [TO DO]
+        
+        :param self: Description
+        :param x: Description
+        :param y: Description
         """
-        # 1. Boundary Check (25x25 maze)
         if abs(x) > 12.2 or abs(y) > 12.2:
             return False
 
-        # 2. Obstacle Check (Using your new MazeEnvironment data)
-        # Each wall in maze_data is [center_x, center_y, width, height]
         for wall in self.env.maze_data:
             wx, wy, ww, wh = wall
-            
-            # Buffer: Car width (0.8) / 2 + small safety gap
-            margin = 0.5 
-            
-            dw = (ww / 2.0) + margin
-            dh = (wh / 2.0) + margin
+                        
+            dw = (ww / 2.0) + self.car_radius
+            dh = (wh / 2.0) + self.car_radius
 
-            # If point is inside the wall's rectangle
             if abs(x - wx) < dw and abs(y - wy) < dh:
-                return False  # Hits a wall!
+                return False
                 
-        return True  # Path is clear
+        return True
 
     def plan(self, max_iter=10000):
         """
