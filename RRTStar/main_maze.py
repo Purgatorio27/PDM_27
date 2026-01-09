@@ -21,7 +21,7 @@ from RRTStar import RRTStar
 from utils import generate_trajectory, save_simulation_log
 
 # All parameters
-DIFFICULTY = "Advanced"  # Choose: "Simple", "Intermediate", "Advanced" ("Expert" and "Master" exist but are too difficult)
+DIFFICULTY = "Simple"  # Choose: "Simple", "Intermediate", "Advanced" ("Expert" and "Master" exist but are too difficult)
 
 MIN_TURN_RAD = 0.8
 TARGET_VELOCITY = 5.0  # m/s
@@ -66,7 +66,7 @@ def main_RRT():
     vehicle = env.spawn_car(START_POSE)
     env.draw_goal(GOAL_POS)
 
-    planner = RRTStar(start_state, GOAL_POS, model, env)
+    planner = RRTStar(start_state, GOAL_POS, model, env, maze=True)
     print(f"Starting RRT* Planning: {DIFFICULTY} Maze")
     solve_start = time.time()
     

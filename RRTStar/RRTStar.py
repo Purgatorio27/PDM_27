@@ -6,37 +6,51 @@ class RRTStar:
     """
     Docstring for RRTStar [TO DO]
     """
-    def __init__(self, start, goal, model, env):
+    def __init__(self, start, goal, model, env, maze=False):
         self.nodes = [start]
         self.goal_pos = goal
         self.model = model
         self.env = env
         self.parents = {0: None}
-        self.step_size = 0.3
+        if maze:
+            self.step_size = 0.3
+        else:
+            self.step_size = 0.5
         self.search_radius = 2.5
         self.car_radius = 0.45  # Safety margin around obstacles
+        self.maze = maze
 
     def collision_checker(self, x, y):
         """
         Docstring for collision_checker [TO DO]
-        
         :param self: Description
         :param x: Description
         :param y: Description
         """
-        if abs(x) > 12.2 or abs(y) > 12.2:
-            return False
-
-        for wall in self.env.maze_data:
-            wx, wy, ww, wh = wall
-                        
-            dw = (ww / 2.0) + self.car_radius
-            dh = (wh / 2.0) + self.car_radius
-
-            if abs(x - wx) < dw and abs(y - wy) < dh:
+        if self.maze:
+            if abs(x) > 12.2 or abs(y) > 12.2:
                 return False
-                
-        return True
+
+            for wall in self.env.maze_data:
+                wx, wy, ww, wh = wall
+                            
+                dw = (ww / 2.0) + self.car_radius
+                dh = (wh / 2.0) + self.car_radius
+
+                if abs(x - wx) < dw and abs(y - wy) < dh:
+                    return False
+            return True
+        else:
+            if abs(x) > 4.8 or abs(y) > 4.8: return False  # Stay within walls
+
+            # Check if there is no collision for all obstacles
+            for obs in self.env.obstacles:
+                ox, oy = obs['pos']
+                dw, dh = obs['dim'][0]/2 + self.car_radius, obs['dim'][1]/2 + self.car_radius
+
+                if abs(x - ox) < dw and abs(y - oy) < dh:
+                    return False
+            return True
 
     def plan(self, max_iter=10000):
         """
@@ -49,10 +63,10 @@ class RRTStar:
             if np.random.rand() < 0.15:  # 15% bias towards goal, 85% random
                 sample = self.goal_pos
             else:
-                sample = (np.random.uniform(-12.5, 12.5), np.random.uniform(-12.5, 12.5))
-
-            # no bias
-            # sample = (np.random.uniform(-12.5, 12.5), np.random.uniform(-12.5, 12.5))
+                if self.maze:
+                    sample = (np.random.uniform(-12.5, 12.5), np.random.uniform(-12.5, 12.5))
+                else:
+                    sample = (np.random.uniform(-4.5, 4.5), np.random.uniform(-4.5, 4.5))
             
             dists = [math.hypot(n.x - sample[0], n.y - sample[1]) for n in self.nodes]
             nearest_node_idx = np.argmin(dists)  # Closest neighbour

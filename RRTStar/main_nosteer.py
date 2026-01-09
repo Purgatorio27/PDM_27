@@ -1,106 +1,113 @@
-import sys
-import os
 import pybullet as p
 import time
-import math
-import numpy as np
+from datetime import datetime
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.dirname(current_dir)
-if root_dir not in sys.path:
-    sys.path.insert(0, root_dir)
+from KinematicBicycleModelRRT import State, SimpleHolonomicModel
+from Environment import Environment
+from RRTStar import RRTStar
+from utils import generate_trajectory, save_simulation_log
 
-from KinematicBicycleModelRRT import State
-from RRTStar import RRTStar 
-
-try:
-    from Environment.environment import MazeEnvironment
-except ModuleNotFoundError:
-    sys.path.append(os.path.join(root_dir, "Environment"))
-    from environment import MazeEnvironment
-
-# Simple holonomic model
-class SimplePointModel:
-    def next_state(self, state, target_pos, step_size):
-        dx = target_pos[0] - state.x
-        dy = target_pos[1] - state.y
-        dist = math.hypot(dx, dy)
-        if dist < 1e-6: return state
-        new_yaw = math.atan2(dy, dx)
-        new_x = state.x + step_size * (dx / dist)
-        new_y = state.y + step_size * (dy / dist)
-        return State(new_x, new_y, new_yaw)
 
 # Parameters
-DIFFICULTY = "Master"  # Choose: "Simple", "Intermediate", "Advanced" ("Expert" and "Master" exist but are too difficult)
-MAX_ITERATIONS = 20000
-MAX_ATTEMPTS = 3
-TARGET_VELOCITY = 5.0
-SIM_HERTZ = 240
+USE_RANDOM_ENV = False
+MIN_TURN_RAD = 0.0 
 
-def main_no_steer():
-    env = MazeEnvironment(difficulty=DIFFICULTY)
-    model = SimplePointModel()
+START_POSE = (-4.2, -4.2, 0.0) 
+GOAL_POS = (4.2, 4.2)
+
+MAX_ITERATIONS = 10000
+MAX_ATTEMPTS = 5
+
+SMOOTH = False
+SMOOTHING_FACTOR = 1
+
+TARGET_VELOCITY = 5.0
+SIM_SLEEP_TIME = 0.05 
+
+
+def main_RRT():
+    env = Environment(randomize=USE_RANDOM_ENV)
+    model = SimpleHolonomicModel()
     
-    START_POSE = env.config['start']
-    GOAL_POS = env.config['goal']
     start_state = State(START_POSE[0], START_POSE[1], START_POSE[2])
     
-    vehicle = env.spawn_car(START_POSE)
-    env.draw_goal(GOAL_POS)
+    simulation_log = {
+        'metadata': {
+            'start_time': datetime.now().strftime('%Y-%m-%d_%H-%M-%S'),
+            'computation_time': 0.0,
+            'travel_time': 0.0,
+            'start_pose': START_POSE,
+            'goal_pos': GOAL_POS,
+            'parameters': {
+                'model_type': 'holonomic',
+                'target_velocity': TARGET_VELOCITY,
+                'max_iterations': MAX_ITERATIONS
+            }
+        },
+        'planned_rrt_path': [],
+        'executed_trajectory': []
+    }
 
-    planner = RRTStar(start_state, GOAL_POS, model, env)
-    planner.search_radius = 2.0 
+    vehicle = env.spawn_car(start_state)
     
-    print(f"Planning")
-    path = None
-    for attempt in range(MAX_ATTEMPTS):
-        path = planner.plan(max_iter=MAX_ITERATIONS)
-        if path: break
+    # Draw Goal
+    p.createMultiBody(
+        0, -1, 
+        p.createVisualShape(p.GEOM_CYLINDER, radius=0.4, length=0.01, rgbaColor=[0, 1, 0, 0.4]), 
+        [GOAL_POS[0], GOAL_POS[1], 0.01]
+    )
 
-    if path:
-        print(f"Path found. Visualizing and executing")
-        for i in range(len(path) - 1):
-            p.addUserDebugLine([path[i].x, path[i].y, 0.1], [path[i+1].x, path[i+1].y, 0.1], [0, 1, 0], 3)
+    # Initialize Planner (ensure your collision_checker fix from before is applied!)
+    planner = RRTStar(start_state, GOAL_POS, model, env, maze=False)
 
-        # Instead of jumping from node to node, interpolate
-        for i in range(len(path) - 1):
-            start_node = path[i]
-            end_node = path[i+1]
+    print("Planning straight-line RRT*...")
+    solve_start = time.time()
+    
+    # If SMOOTH is False, generate_trajectory usually returns RRT_path for both outputs
+    RRT_trajectory, trajectory = generate_trajectory(
+        planner, SMOOTHING_FACTOR, TARGET_VELOCITY, MAX_ATTEMPTS, MAX_ITERATIONS
+    )
+
+    solve_end = time.time()
+    simulation_log['metadata']['computation_time'] = solve_end - solve_start
+
+    if RRT_trajectory is not None:
+        print(f"Path found! Computation time: {solve_end - solve_start:.2f}s")
+        travel_start = time.time()
+
+        # Log and Draw the Blue RRT path
+        for i, node in enumerate(RRT_trajectory):
+            simulation_log['planned_rrt_path'].append({
+                'x': float(node.x), 'y': float(node.y), 'yaw': float(node.yaw)
+            })
+            if i < len(RRT_trajectory) - 1:
+                p.addUserDebugLine([RRT_trajectory[i].x, RRT_trajectory[i].y, 0.1], 
+                                   [RRT_trajectory[i+1].x, RRT_trajectory[i+1].y, 0.1], [0, 0, 1], 2)
+
+        # Execution loop using the RRT nodes directly
+        for i, node in enumerate(RRT_trajectory):
+            p.resetBasePositionAndOrientation(
+                vehicle, [node.x, node.y, 0.15], p.getQuaternionFromEuler([0, 0, node.yaw])
+            )
+
+            simulation_log['executed_trajectory'].append({
+                'step': i, 'x': float(node.x), 'y': float(node.y),
+                'yaw': float(node.yaw), 'v': TARGET_VELOCITY
+            })
             
-            # Calculate distance between these two nodes
-            segment_dist = math.hypot(end_node.x - start_node.x, end_node.y - start_node.y)
-            
-            # Calculate how many simulation steps this segment should take: steps = distance / velocity * frequency
-            num_steps = max(1, int((segment_dist / TARGET_VELOCITY) * SIM_HERTZ))
+            p.stepSimulation()
+            time.sleep(SIM_SLEEP_TIME)
 
-            for s in range(num_steps):
-                # Interpolation factor (0 to 1)
-                t = s / num_steps
-                
-                # Linearly interpolate position
-                curr_x = start_node.x + (end_node.x - start_node.x) * t
-                curr_y = start_node.y + (end_node.y - start_node.y) * t
-                
-                # Use the heading of the segment
-                curr_yaw = end_node.yaw 
-
-                p.resetBasePositionAndOrientation(
-                    vehicle, 
-                    [curr_x, curr_y, 0.15], 
-                    p.getQuaternionFromEuler([0, 0, curr_yaw])
-                )
-                
-                p.stepSimulation()
-                time.sleep(1/SIM_HERTZ)  # 1/240
-
-        print("Goal reached")
+        travel_end = time.time()
+        simulation_log['metadata']['travel_time'] = travel_end - travel_start
+        save_simulation_log(simulation_log)
+        print("Simulation complete.")
     else:
-        print("No path found")
+        print("Failed to find path.")
 
-    while p.isConnected():
+    while True:
         p.stepSimulation()
         time.sleep(0.01)
 
 if __name__ == "__main__":
-    main_no_steer()
+    main_RRT()

@@ -72,3 +72,14 @@ class KinematicBicycleModelRRT:
             new_y = state.y - radius * (math.cos(new_yaw) - math.cos(state.yaw))
 
         return State(new_x, new_y, new_yaw)
+    
+class SimpleHolonomicModel:
+    def next_state(self, state, target_pos, step_size):
+        dx = target_pos[0] - state.x
+        dy = target_pos[1] - state.y
+        dist = math.hypot(dx, dy)
+        if dist < 1e-6: return state
+        new_yaw = math.atan2(dy, dx)
+        new_x = state.x + step_size * (dx / dist)
+        new_y = state.y + step_size * (dy / dist)
+        return State(new_x, new_y, new_yaw)
