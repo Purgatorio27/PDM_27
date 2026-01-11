@@ -71,6 +71,20 @@ int main()
     ocp_nlp_out *nlp_out = vehicle_mpc_acados_get_nlp_out(acados_ocp_capsule);
     ocp_nlp_solver *nlp_solver = vehicle_mpc_acados_get_nlp_solver(acados_ocp_capsule);
     void *nlp_opts = vehicle_mpc_acados_get_nlp_opts(acados_ocp_capsule);
+    // initial condition
+    double lbx0[NBX0];
+    double ubx0[NBX0];
+    lbx0[0] = 0;
+    ubx0[0] = 0;
+    lbx0[1] = 0;
+    ubx0[1] = 0;
+    lbx0[2] = 0;
+    ubx0[2] = 0;
+    lbx0[3] = 0;
+    ubx0[3] = 0;
+
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "lbx", lbx0);
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "ubx", ubx0);
 
     // initialization for state values
     double x_init[NX];

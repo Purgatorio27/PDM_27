@@ -1,0 +1,53 @@
+pybullet build time: Jan 29 2025 23:16:28
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+Successfully generated 8 dynamic obstacles.
+==================================================
+Run Dynamic MPC + RRT* (30x30)
+==================================================
+[RRT] Planning failed. Best distance to goal: 25.98m
+[MPC_RRT] Planning attempt 1 failed. Retrying with new seed...
+[MPC_RRT] Planning succeeded on attempt 2
+[MPC_RRT] Path planned: 41 waypoints, time=0.012s, iterations=1713
+[MPC_RRT] path_len=47.1m. Pre-compiling 21 virtual solvers (spacing ~1.5m).
+[MPC_RRT] Initializing single shared MPC solver instance...
+field AcadosOcpDims.N has been migrated to AcadosOcpOptions.N_horizon. setting AcadosOcpOptions.N_horizon = N. For future comppatibility, please use AcadosOcpOptions.N_horizon directly.
+acados was compiled without OpenMP.
+[MPC_RRT] 'Pre-compiled' 21 virtual solvers (Shared Instance).
+  Solver 0: waypoint 1 -> target=(2.9, 2.8)
+  Solver 1: waypoint 3 -> target=(4.8, 4.0)
+  Solver 2: waypoint 5 -> target=(6.9, 3.7)
+  Solver 3: waypoint 7 -> target=(8.9, 2.4)
+  Solver 4: waypoint 9 -> target=(11.1, 1.5)
+  Solver 5: waypoint 11 -> target=(13.4, 1.1)
+  Solver 6: waypoint 13 -> target=(15.8, 1.1)
+  Solver 7: waypoint 15 -> target=(18.1, 1.6)
+  Solver 8: waypoint 17 -> target=(20.3, 2.6)
+  Solver 9: waypoint 19 -> target=(22.2, 4.1)
+  Solver 10: waypoint 21 -> target=(23.8, 5.8)
+  Solver 11: waypoint 23 -> target=(25.3, 7.7)
+  Solver 12: waypoint 25 -> target=(26.4, 9.8)
+  Solver 13: waypoint 27 -> target=(27.2, 12.0)
+  Solver 14: waypoint 29 -> target=(27.8, 14.3)
+  Solver 15: waypoint 31 -> target=(28.5, 16.6)
+  Solver 16: waypoint 33 -> target=(28.8, 18.9)
+  Solver 17: waypoint 35 -> target=(28.5, 21.2)
+  Solver 18: waypoint 37 -> target=(27.5, 23.4)
+  Solver 19: waypoint 39 -> target=(26.5, 25.2)
+  Solver 20: waypoint 40 -> target=(26.0, 26.0)
+Goal Reached at step 599!
+Log saved to dynamic_mpc_rrt_2026-01-11_22-22-43.json

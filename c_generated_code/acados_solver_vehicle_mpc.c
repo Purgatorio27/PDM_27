@@ -42,7 +42,7 @@
 #include "vehicle_mpc_model/vehicle_mpc_model.h"
 
 
-#include "vehicle_mpc_constraints/vehicle_mpc_constraints.h"
+#include "vehicle_mpc_cost/vehicle_mpc_cost.h"
 
 
 
@@ -152,15 +152,15 @@ void vehicle_mpc_acados_create_set_plan(ocp_nlp_plan_t* nlp_solver_plan, const i
     *  plan
     ************************************************/
 
-    nlp_solver_plan->nlp_solver = SQP;
+    nlp_solver_plan->nlp_solver = SQP_RTI;
 
     nlp_solver_plan->ocp_qp_solver_plan.qp_solver = PARTIAL_CONDENSING_HPIPM;
     nlp_solver_plan->relaxed_ocp_qp_solver_plan.qp_solver = PARTIAL_CONDENSING_HPIPM;
-    nlp_solver_plan->nlp_cost[0] = LINEAR_LS;
+    nlp_solver_plan->nlp_cost[0] = NONLINEAR_LS;
     for (int i = 1; i < N; i++)
-        nlp_solver_plan->nlp_cost[i] = LINEAR_LS;
+        nlp_solver_plan->nlp_cost[i] = NONLINEAR_LS;
 
-    nlp_solver_plan->nlp_cost[N] = LINEAR_LS;
+    nlp_solver_plan->nlp_cost[N] = NONLINEAR_LS;
 
     for (int i = 0; i < N; i++)
     {
@@ -244,7 +244,7 @@ static ocp_nlp_dims* vehicle_mpc_acados_create_setup_dimensions(vehicle_mpc_solv
     nsbx[0] = 0;
     ns[0] = NS0;
     
-    nbxe[0] = 0;
+    nbxe[0] = 4;
     
     ny[0] = NY0;
     nh[0] = NH0;
@@ -343,16 +343,9 @@ void vehicle_mpc_acados_create_setup_functions(vehicle_mpc_solver_capsule* capsu
     ext_fun_opts.external_workspace = true;
     if (N > 0)
     {
-        // constraints.constr_type == "BGH" and dims.nh > 0
-        capsule->nl_constr_h_fun_jac = (external_function_external_param_casadi *) malloc(sizeof(external_function_external_param_casadi)*(N-1));
-        for (int i = 0; i < N-1; i++) {
-            MAP_CASADI_FNC(nl_constr_h_fun_jac[i], vehicle_mpc_constr_h_fun_jac_uxt_zt);
-        }
-        capsule->nl_constr_h_fun = (external_function_external_param_casadi *) malloc(sizeof(external_function_external_param_casadi)*(N-1));
-        for (int i = 0; i < N-1; i++) {
-            MAP_CASADI_FNC(nl_constr_h_fun[i], vehicle_mpc_constr_h_fun);
-        }
-    
+        // nonlinear least squares function
+        MAP_CASADI_FNC(cost_y_0_fun, vehicle_mpc_cost_y_0_fun);
+        MAP_CASADI_FNC(cost_y_0_fun_jac_ut_xt, vehicle_mpc_cost_y_0_fun_jac_ut_xt);
 
 
 
@@ -373,7 +366,22 @@ void vehicle_mpc_acados_create_setup_functions(vehicle_mpc_solver_capsule* capsu
     
 
     
+        // nonlinear least squares cost
+        capsule->cost_y_fun = (external_function_external_param_casadi *) malloc(sizeof(external_function_external_param_casadi)*(N-1));
+        for (int i = 0; i < N-1; i++)
+        {
+            MAP_CASADI_FNC(cost_y_fun[i], vehicle_mpc_cost_y_fun);
+        }
+
+        capsule->cost_y_fun_jac_ut_xt = (external_function_external_param_casadi *) malloc(sizeof(external_function_external_param_casadi)*(N-1));
+        for (int i = 0; i < N-1; i++)
+        {
+            MAP_CASADI_FNC(cost_y_fun_jac_ut_xt[i], vehicle_mpc_cost_y_fun_jac_ut_xt);
+        }
     } // N > 0
+    // nonlinear least square function
+    MAP_CASADI_FNC(cost_y_e_fun, vehicle_mpc_cost_y_e_fun);
+    MAP_CASADI_FNC(cost_y_e_fun_jac_ut_xt, vehicle_mpc_cost_y_e_fun_jac_ut_xt);
 
 #undef MAP_CASADI_FNC
 }
@@ -430,34 +438,74 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     {
         // set time_steps
     
-        double time_step = 0.1;
+        double time_step = 0.25;
         for (int i = 0; i < N; i++)
         {
             ocp_nlp_in_set(nlp_config, nlp_dims, nlp_in, i, "Ts", &time_step);
         }
         // set cost scaling
         double* cost_scaling = malloc((N+1)*sizeof(double));
-        cost_scaling[0] = 0.1;
-        cost_scaling[1] = 0.1;
-        cost_scaling[2] = 0.1;
-        cost_scaling[3] = 0.1;
-        cost_scaling[4] = 0.1;
-        cost_scaling[5] = 0.1;
-        cost_scaling[6] = 0.1;
-        cost_scaling[7] = 0.1;
-        cost_scaling[8] = 0.1;
-        cost_scaling[9] = 0.1;
-        cost_scaling[10] = 0.1;
-        cost_scaling[11] = 0.1;
-        cost_scaling[12] = 0.1;
-        cost_scaling[13] = 0.1;
-        cost_scaling[14] = 0.1;
-        cost_scaling[15] = 0.1;
-        cost_scaling[16] = 0.1;
-        cost_scaling[17] = 0.1;
-        cost_scaling[18] = 0.1;
-        cost_scaling[19] = 0.1;
-        cost_scaling[20] = 1;
+        cost_scaling[0] = 0.25;
+        cost_scaling[1] = 0.25;
+        cost_scaling[2] = 0.25;
+        cost_scaling[3] = 0.25;
+        cost_scaling[4] = 0.25;
+        cost_scaling[5] = 0.25;
+        cost_scaling[6] = 0.25;
+        cost_scaling[7] = 0.25;
+        cost_scaling[8] = 0.25;
+        cost_scaling[9] = 0.25;
+        cost_scaling[10] = 0.25;
+        cost_scaling[11] = 0.25;
+        cost_scaling[12] = 0.25;
+        cost_scaling[13] = 0.25;
+        cost_scaling[14] = 0.25;
+        cost_scaling[15] = 0.25;
+        cost_scaling[16] = 0.25;
+        cost_scaling[17] = 0.25;
+        cost_scaling[18] = 0.25;
+        cost_scaling[19] = 0.25;
+        cost_scaling[20] = 0.25;
+        cost_scaling[21] = 0.25;
+        cost_scaling[22] = 0.25;
+        cost_scaling[23] = 0.25;
+        cost_scaling[24] = 0.25;
+        cost_scaling[25] = 0.25;
+        cost_scaling[26] = 0.25;
+        cost_scaling[27] = 0.25;
+        cost_scaling[28] = 0.25;
+        cost_scaling[29] = 0.25;
+        cost_scaling[30] = 0.25;
+        cost_scaling[31] = 0.25;
+        cost_scaling[32] = 0.25;
+        cost_scaling[33] = 0.25;
+        cost_scaling[34] = 0.25;
+        cost_scaling[35] = 0.25;
+        cost_scaling[36] = 0.25;
+        cost_scaling[37] = 0.25;
+        cost_scaling[38] = 0.25;
+        cost_scaling[39] = 0.25;
+        cost_scaling[40] = 0.25;
+        cost_scaling[41] = 0.25;
+        cost_scaling[42] = 0.25;
+        cost_scaling[43] = 0.25;
+        cost_scaling[44] = 0.25;
+        cost_scaling[45] = 0.25;
+        cost_scaling[46] = 0.25;
+        cost_scaling[47] = 0.25;
+        cost_scaling[48] = 0.25;
+        cost_scaling[49] = 0.25;
+        cost_scaling[50] = 0.25;
+        cost_scaling[51] = 0.25;
+        cost_scaling[52] = 0.25;
+        cost_scaling[53] = 0.25;
+        cost_scaling[54] = 0.25;
+        cost_scaling[55] = 0.25;
+        cost_scaling[56] = 0.25;
+        cost_scaling[57] = 0.25;
+        cost_scaling[58] = 0.25;
+        cost_scaling[59] = 0.25;
+        cost_scaling[60] = 1;
         for (int i = 0; i <= N; i++)
         {
             ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "scaling", &cost_scaling[i]);
@@ -478,6 +526,118 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     }
 
     /**** Cost ****/
+    double* yref_0 = calloc(NY0, sizeof(double));
+    // change only the non-zero elements:
+    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, 0, "yref", yref_0);
+    free(yref_0);
+
+   double* W_0 = calloc(NY0*NY0, sizeof(double));
+    // change only the non-zero elements:
+    W_0[0+(NY0) * 0] = 5;
+    W_0[1+(NY0) * 1] = 5;
+    W_0[2+(NY0) * 2] = 2;
+    W_0[3+(NY0) * 3] = 2;
+    W_0[4+(NY0) * 4] = 0.01;
+    W_0[5+(NY0) * 5] = 0.01;
+    W_0[6+(NY0) * 6] = 10000;
+    W_0[7+(NY0) * 7] = 500;
+    W_0[8+(NY0) * 8] = 10000;
+    W_0[9+(NY0) * 9] = 500;
+    W_0[10+(NY0) * 10] = 10000;
+    W_0[11+(NY0) * 11] = 500;
+    W_0[12+(NY0) * 12] = 10000;
+    W_0[13+(NY0) * 13] = 500;
+    W_0[14+(NY0) * 14] = 10000;
+    W_0[15+(NY0) * 15] = 500;
+    W_0[16+(NY0) * 16] = 10000;
+    W_0[17+(NY0) * 17] = 500;
+    W_0[18+(NY0) * 18] = 10000;
+    W_0[19+(NY0) * 19] = 500;
+    W_0[20+(NY0) * 20] = 10000;
+    W_0[21+(NY0) * 21] = 500;
+    W_0[22+(NY0) * 22] = 10000;
+    W_0[23+(NY0) * 23] = 500;
+    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, 0, "W", W_0);
+    free(W_0);
+    double* yref = calloc(NY, sizeof(double));
+    // change only the non-zero elements:
+
+    for (int i = 1; i < N; i++)
+    {
+        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "yref", yref);
+    }
+    free(yref);
+    double* W = calloc(NY*NY, sizeof(double));
+    // change only the non-zero elements:
+    W[0+(NY) * 0] = 5;
+    W[1+(NY) * 1] = 5;
+    W[2+(NY) * 2] = 2;
+    W[3+(NY) * 3] = 2;
+    W[4+(NY) * 4] = 0.01;
+    W[5+(NY) * 5] = 0.01;
+    W[6+(NY) * 6] = 10000;
+    W[7+(NY) * 7] = 500;
+    W[8+(NY) * 8] = 10000;
+    W[9+(NY) * 9] = 500;
+    W[10+(NY) * 10] = 10000;
+    W[11+(NY) * 11] = 500;
+    W[12+(NY) * 12] = 10000;
+    W[13+(NY) * 13] = 500;
+    W[14+(NY) * 14] = 10000;
+    W[15+(NY) * 15] = 500;
+    W[16+(NY) * 16] = 10000;
+    W[17+(NY) * 17] = 500;
+    W[18+(NY) * 18] = 10000;
+    W[19+(NY) * 19] = 500;
+    W[20+(NY) * 20] = 10000;
+    W[21+(NY) * 21] = 500;
+    W[22+(NY) * 22] = 10000;
+    W[23+(NY) * 23] = 500;
+
+    for (int i = 1; i < N; i++)
+    {
+        ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, i, "W", W);
+    }
+    free(W);
+    double* yref_e = calloc(NYN, sizeof(double));
+    // change only the non-zero elements:
+    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N, "yref", yref_e);
+    free(yref_e);
+
+    double* W_e = calloc(NYN*NYN, sizeof(double));
+    // change only the non-zero elements:
+    W_e[0+(NYN) * 0] = 8;
+    W_e[1+(NYN) * 1] = 8;
+    W_e[2+(NYN) * 2] = 2;
+    W_e[3+(NYN) * 3] = 15000;
+    W_e[4+(NYN) * 4] = 750;
+    W_e[5+(NYN) * 5] = 15000;
+    W_e[6+(NYN) * 6] = 750;
+    W_e[7+(NYN) * 7] = 15000;
+    W_e[8+(NYN) * 8] = 750;
+    W_e[9+(NYN) * 9] = 15000;
+    W_e[10+(NYN) * 10] = 750;
+    W_e[11+(NYN) * 11] = 15000;
+    W_e[12+(NYN) * 12] = 750;
+    W_e[13+(NYN) * 13] = 15000;
+    W_e[14+(NYN) * 14] = 750;
+    W_e[15+(NYN) * 15] = 15000;
+    W_e[16+(NYN) * 16] = 750;
+    W_e[17+(NYN) * 17] = 15000;
+    W_e[18+(NYN) * 18] = 750;
+    W_e[19+(NYN) * 19] = 15000;
+    W_e[20+(NYN) * 20] = 750;
+    ocp_nlp_cost_model_set(nlp_config, nlp_dims, nlp_in, N, "W", W_e);
+    free(W_e);
+    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, 0, "nls_y_fun", &capsule->cost_y_0_fun);
+    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, 0, "nls_y_fun_jac", &capsule->cost_y_0_fun_jac_ut_xt);
+    for (int i = 1; i < N; i++)
+    {
+        ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nls_y_fun", &capsule->cost_y_fun[i-1]);
+        ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nls_y_fun_jac", &capsule->cost_y_fun_jac_ut_xt[i-1]);
+    }
+    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, N, "nls_y_fun", &capsule->cost_y_e_fun);
+    ocp_nlp_cost_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, N, "nls_y_fun_jac", &capsule->cost_y_e_fun_jac_ut_xt);
 
 
 
@@ -488,6 +648,31 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     /**** Constraints ****/
 
     // bounds for initial stage
+    // x0
+    int* idxbx0 = malloc(NBX0 * sizeof(int));
+    idxbx0[0] = 0;
+    idxbx0[1] = 1;
+    idxbx0[2] = 2;
+    idxbx0[3] = 3;
+
+    double* lubx0 = calloc(2*NBX0, sizeof(double));
+    double* lbx0 = lubx0;
+    double* ubx0 = lubx0 + NBX0;
+    // change only the non-zero elements:
+
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "idxbx", idxbx0);
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "lbx", lbx0);
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "ubx", ubx0);
+    free(idxbx0);
+    free(lubx0);
+    // idxbxe_0
+    int* idxbxe_0 = malloc(4 * sizeof(int));
+    idxbxe_0[0] = 0;
+    idxbxe_0[1] = 1;
+    idxbxe_0[2] = 2;
+    idxbxe_0[3] = 3;
+    ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, 0, "idxbxe", idxbxe_0);
+    free(idxbxe_0);
 
 
 
@@ -508,10 +693,10 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     double* lubu = calloc(2*NBU, sizeof(double));
     double* lbu = lubu;
     double* ubu = lubu + NBU;
-    lbu[0] = -0.5235987755982988;
-    ubu[0] = 0.5235987755982988;
-    lbu[1] = -1.5;
-    ubu[1] = 1;
+    lbu[0] = -0.7853981633974483;
+    ubu[0] = 0.7853981633974483;
+    lbu[1] = -3;
+    ubu[1] = 3;
 
     for (int i = 0; i < N; i++)
     {
@@ -535,8 +720,8 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     double* lubx = calloc(2*NBX, sizeof(double));
     double* lbx = lubx;
     double* ubx = lubx + NBX;
-    lbx[0] = -1;
-    ubx[0] = 2.5;
+    lbx[0] = 0.3;
+    ubx[0] = 4;
 
     for (int i = 1; i < N; i++)
     {
@@ -548,28 +733,6 @@ void vehicle_mpc_acados_setup_nlp_in(vehicle_mpc_solver_capsule* capsule, const 
     free(lubx);
 
 
-    // set up nonlinear constraints for stage 1 to N-1
-    double* luh = calloc(2*NH, sizeof(double));
-    double* lh = luh;
-    double* uh = luh + NH;
-    uh[0] = 1000000;
-    uh[1] = 1000000;
-    uh[2] = 1000000;
-    uh[3] = 1000000;
-
-    for (int i = 1; i < N; i++)
-    {
-        ocp_nlp_constraints_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nl_constr_h_fun_jac",
-                                      &capsule->nl_constr_h_fun_jac[i-1]);
-        ocp_nlp_constraints_model_set_external_param_fun(nlp_config, nlp_dims, nlp_in, i, "nl_constr_h_fun",
-                                      &capsule->nl_constr_h_fun[i-1]);
-        
-        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, i, "lh", lh);
-        ocp_nlp_constraints_model_set(nlp_config, nlp_dims, nlp_in, nlp_out, i, "uh", uh);
-        
-        
-    }
-    free(luh);
 
 
 
@@ -638,11 +801,11 @@ static void vehicle_mpc_acados_create_set_opts(vehicle_mpc_solver_capsule* capsu
     int globalization_full_step_dual = 0;
     ocp_nlp_solver_opts_set(nlp_config, capsule->nlp_opts, "globalization_full_step_dual", &globalization_full_step_dual);
 
-    double levenberg_marquardt = 0;
+    double levenberg_marquardt = 1;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "levenberg_marquardt", &levenberg_marquardt);
 
     /* options QP solver */
-    int qp_solver_cond_N;const int qp_solver_cond_N_ori = 20;
+    int qp_solver_cond_N;const int qp_solver_cond_N_ori = 5;
     qp_solver_cond_N = N < qp_solver_cond_N_ori ? N : qp_solver_cond_N_ori; // use the minimum value here
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qp_cond_N", &qp_solver_cond_N);
 
@@ -651,14 +814,6 @@ static void vehicle_mpc_acados_create_set_opts(vehicle_mpc_solver_capsule* capsu
 
     bool store_iterates = false;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "store_iterates", &store_iterates);
-    int log_primal_step_norm = false;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "log_primal_step_norm", &log_primal_step_norm);
-
-    int log_dual_step_norm = false;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "log_dual_step_norm", &log_dual_step_norm);
-
-    double nlp_solver_tol_min_step_norm = 0;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "tol_min_step_norm", &nlp_solver_tol_min_step_norm);
     // set HPIPM mode: should be done before setting other QP solver options
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qp_hpipm_mode", "BALANCE");
 
@@ -670,75 +825,17 @@ static void vehicle_mpc_acados_create_set_opts(vehicle_mpc_solver_capsule* capsu
 
 
 
-    // set SQP specific options
-    double nlp_solver_tol_stat = 0.01;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "tol_stat", &nlp_solver_tol_stat);
+    int as_rti_iter = 1;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "as_rti_iter", &as_rti_iter);
 
-    double nlp_solver_tol_eq = 0.01;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "tol_eq", &nlp_solver_tol_eq);
+    int as_rti_level = 4;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "as_rti_level", &as_rti_level);
 
-    double nlp_solver_tol_ineq = 0.01;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "tol_ineq", &nlp_solver_tol_ineq);
+    int rti_log_residuals = 0;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "rti_log_residuals", &rti_log_residuals);
 
-    double nlp_solver_tol_comp = 0.01;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "tol_comp", &nlp_solver_tol_comp);
-
-    int nlp_solver_max_iter = 60;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "max_iter", &nlp_solver_max_iter);
-
-    // set options for adaptive Levenberg-Marquardt Update
-    bool with_adaptive_levenberg_marquardt = false;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "with_adaptive_levenberg_marquardt", &with_adaptive_levenberg_marquardt);
-
-    double adaptive_levenberg_marquardt_lam = 5;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "adaptive_levenberg_marquardt_lam", &adaptive_levenberg_marquardt_lam);
-
-    double adaptive_levenberg_marquardt_mu_min = 0.0000000000000001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "adaptive_levenberg_marquardt_mu_min", &adaptive_levenberg_marquardt_mu_min);
-
-    double adaptive_levenberg_marquardt_mu0 = 0.001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "adaptive_levenberg_marquardt_mu0", &adaptive_levenberg_marquardt_mu0);
-
-    double adaptive_levenberg_marquardt_obj_scalar = 2;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "adaptive_levenberg_marquardt_obj_scalar", &adaptive_levenberg_marquardt_obj_scalar);
-
-    bool eval_residual_at_max_iter = false;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "eval_residual_at_max_iter", &eval_residual_at_max_iter);
-
-    // QP scaling
-    double qpscaling_ub_max_abs_eig = 100000;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qpscaling_ub_max_abs_eig", &qpscaling_ub_max_abs_eig);
-
-    double qpscaling_lb_norm_inf_grad_obj = 0.0001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qpscaling_lb_norm_inf_grad_obj", &qpscaling_lb_norm_inf_grad_obj);
-
-    qpscaling_scale_objective_type qpscaling_scale_objective = NO_OBJECTIVE_SCALING;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qpscaling_scale_objective", &qpscaling_scale_objective);
-
-    ocp_nlp_qpscaling_constraint_type qpscaling_scale_constraints = NO_CONSTRAINT_SCALING;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qpscaling_scale_constraints", &qpscaling_scale_constraints);
-
-    // NLP QP tol strategy
-    ocp_nlp_qp_tol_strategy_t nlp_qp_tol_strategy = FIXED_QP_TOL;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_strategy", &nlp_qp_tol_strategy);
-
-    double nlp_qp_tol_reduction_factor = 0.1;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_reduction_factor", &nlp_qp_tol_reduction_factor);
-
-    double nlp_qp_tol_safety_factor = 0.1;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_safety_factor", &nlp_qp_tol_safety_factor);
-
-    double nlp_qp_tol_min_stat = 0.000000001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_min_stat", &nlp_qp_tol_min_stat);
-
-    double nlp_qp_tol_min_eq = 0.0000000001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_min_eq", &nlp_qp_tol_min_eq);
-
-    double nlp_qp_tol_min_ineq = 0.0000000001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_min_ineq", &nlp_qp_tol_min_ineq);
-
-    double nlp_qp_tol_min_comp = 0.00000000001;
-    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "nlp_qp_tol_min_comp", &nlp_qp_tol_min_comp);
+    int rti_log_only_available_residuals = 0;
+    ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "rti_log_only_available_residuals", &rti_log_only_available_residuals);
 
     bool with_anderson_acceleration = false;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "with_anderson_acceleration", &with_anderson_acceleration);
@@ -746,7 +843,7 @@ static void vehicle_mpc_acados_create_set_opts(vehicle_mpc_solver_capsule* capsu
     double anderson_activation_threshold = 10;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "anderson_activation_threshold", &anderson_activation_threshold);
 
-    int qp_solver_iter_max = 100;
+    int qp_solver_iter_max = 200;
     ocp_nlp_solver_opts_set(nlp_config, nlp_opts, "qp_iter_max", &qp_solver_iter_max);
 
 
@@ -779,7 +876,8 @@ void vehicle_mpc_acados_set_nlp_out(vehicle_mpc_solver_capsule* capsule)
     double* xu0 = calloc(NX+NU, sizeof(double));
     double* x0 = xu0;
 
-    // initialize with zeros
+    // initialize with x0
+
 
     double* u0 = xu0 + NX;
 
@@ -932,7 +1030,7 @@ int vehicle_mpc_acados_update_params(vehicle_mpc_solver_capsule* capsule, int st
 {
     int solver_status = 0;
 
-    int casadi_np = 6;
+    int casadi_np = 2;
     if (casadi_np != np) {
         printf("acados_update_params: trying to set %i parameters for external functions."
             " External function has %i parameters. Exiting.\n", np, casadi_np);
@@ -1013,15 +1111,19 @@ int vehicle_mpc_acados_free(vehicle_mpc_solver_capsule* capsule)
   
 
     // cost
+    external_function_external_param_casadi_free(&capsule->cost_y_0_fun);
+    external_function_external_param_casadi_free(&capsule->cost_y_0_fun_jac_ut_xt);
+    for (int i = 0; i < N - 1; i++)
+    {
+        external_function_external_param_casadi_free(&capsule->cost_y_fun[i]);
+        external_function_external_param_casadi_free(&capsule->cost_y_fun_jac_ut_xt[i]);
+    }
+    free(capsule->cost_y_fun);
+    free(capsule->cost_y_fun_jac_ut_xt);
+    external_function_external_param_casadi_free(&capsule->cost_y_e_fun);
+    external_function_external_param_casadi_free(&capsule->cost_y_e_fun_jac_ut_xt);
 
     // constraints
-    for (int i = 0; i < N-1; i++)
-    {
-        external_function_external_param_casadi_free(&capsule->nl_constr_h_fun_jac[i]);
-        external_function_external_param_casadi_free(&capsule->nl_constr_h_fun[i]);
-    }
-    free(capsule->nl_constr_h_fun_jac);
-    free(capsule->nl_constr_h_fun);
 
 
 
@@ -1043,29 +1145,19 @@ void vehicle_mpc_acados_print_stats(vehicle_mpc_solver_capsule* capsule)
         printf("stat_n_max = %d is too small, increase it in the template!\n", stat_n_max);
         exit(1);
     }
-    double stat[976];
+    double stat[1616];
     ocp_nlp_get(capsule->nlp_solver, "statistics", stat);
 
     int nrow = nlp_iter+1 < stat_m ? nlp_iter+1 : stat_m;
 
 
-    printf("iter\tres_stat\tres_eq\t\tres_ineq\tres_comp\tqp_stat\tqp_iter\talpha");
-    if (stat_n > 8)
-        printf("\t\tqp_res_stat\tqp_res_eq\tqp_res_ineq\tqp_res_comp");
-    printf("\n");
+    printf("iter\tqp_stat\tqp_iter\n");
     for (int i = 0; i < nrow; i++)
     {
         for (int j = 0; j < stat_n + 1; j++)
         {
-            if (j == 0 || j == 5 || j == 6)
-            {
-                tmp_int = (int) stat[i + j * nrow];
-                printf("%d\t", tmp_int);
-            }
-            else
-            {
-                printf("%e\t", stat[i + j * nrow]);
-            }
+            tmp_int = (int) stat[i + j * nrow];
+            printf("%d\t", tmp_int);
         }
         printf("\n");
     }

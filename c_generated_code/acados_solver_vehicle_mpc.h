@@ -39,10 +39,10 @@
 #define VEHICLE_MPC_NX     4
 #define VEHICLE_MPC_NZ     0
 #define VEHICLE_MPC_NU     2
-#define VEHICLE_MPC_NP     6
+#define VEHICLE_MPC_NP     2
 #define VEHICLE_MPC_NP_GLOBAL     0
 #define VEHICLE_MPC_NBX    1
-#define VEHICLE_MPC_NBX0   0
+#define VEHICLE_MPC_NBX0   4
 #define VEHICLE_MPC_NBU    2
 #define VEHICLE_MPC_NSBX   0
 #define VEHICLE_MPC_NSBU   0
@@ -61,11 +61,11 @@
 #define VEHICLE_MPC_NG     0
 #define VEHICLE_MPC_NBXN   0
 #define VEHICLE_MPC_NGN    0
-#define VEHICLE_MPC_NY0    0
-#define VEHICLE_MPC_NY     0
-#define VEHICLE_MPC_NYN    0
-#define VEHICLE_MPC_N      20
-#define VEHICLE_MPC_NH     4
+#define VEHICLE_MPC_NY0    24
+#define VEHICLE_MPC_NY     24
+#define VEHICLE_MPC_NYN    21
+#define VEHICLE_MPC_N      60
+#define VEHICLE_MPC_NH     0
 #define VEHICLE_MPC_NHN    0
 #define VEHICLE_MPC_NH0    0
 #define VEHICLE_MPC_NPHI0  0
@@ -106,16 +106,21 @@ typedef struct vehicle_mpc_solver_capsule
 
     // cost
 
+    external_function_external_param_casadi *cost_y_fun;
+    external_function_external_param_casadi *cost_y_fun_jac_ut_xt;
 
 
 
+    external_function_external_param_casadi cost_y_0_fun;
+    external_function_external_param_casadi cost_y_0_fun_jac_ut_xt;
+
+
+
+    external_function_external_param_casadi cost_y_e_fun;
+    external_function_external_param_casadi cost_y_e_fun_jac_ut_xt;
 
 
     // constraints
-    external_function_external_param_casadi *nl_constr_h_fun_jac;
-    external_function_external_param_casadi *nl_constr_h_fun;
-
-
 
 
 

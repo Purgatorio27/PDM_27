@@ -32,7 +32,6 @@ extern "C" {
 #define casadi_f0 CASADI_PREFIX(f0)
 #define casadi_s0 CASADI_PREFIX(s0)
 #define casadi_s1 CASADI_PREFIX(s1)
-#define casadi_s2 CASADI_PREFIX(s2)
 
 /* Symbol visibility in DLLs */
 #ifndef CASADI_SYMBOL_EXPORT
@@ -51,13 +50,12 @@ extern "C" {
 
 static const casadi_int casadi_s0[3] = {4, 1, 1};
 static const casadi_int casadi_s1[3] = {2, 1, 1};
-static const casadi_int casadi_s2[3] = {6, 1, 1};
 
-/* vehicle_mpc_dyn_disc_phi_fun:(i0[4],i1[2],i2[6])->(o0[4]) */
+/* vehicle_mpc_dyn_disc_phi_fun:(i0[4],i1[2],i2[2])->(o0[4]) */
 static int casadi_f0(const casadi_real** arg, casadi_real** res, casadi_int* iw, casadi_real* w, int mem) {
   casadi_real a0, a1, a2, a3, a4, a5, a6;
   a0=arg[0]? arg[0][0] : 0;
-  a1=1.0000000000000001e-01;
+  a1=2.5000000000000000e-01;
   a2=arg[0]? arg[0][2] : 0;
   a3=arg[0]? arg[0][3] : 0;
   a4=5.0000000000000000e-01;
@@ -149,7 +147,7 @@ CASADI_SYMBOL_EXPORT const casadi_int* vehicle_mpc_dyn_disc_phi_fun_sparsity_in(
   switch (i) {
     case 0: return casadi_s0;
     case 1: return casadi_s1;
-    case 2: return casadi_s2;
+    case 2: return casadi_s1;
     default: return 0;
   }
 }

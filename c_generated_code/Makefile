@@ -45,8 +45,15 @@ MODEL_OBJ := $(MODEL_SRC:.c=.o)
 OCP_SRC=
 
 
-OCP_SRC+= vehicle_mpc_constraints/vehicle_mpc_constr_h_fun_jac_uxt_zt.c
-OCP_SRC+= vehicle_mpc_constraints/vehicle_mpc_constr_h_fun.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+OCP_SRC+= vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
 
 OCP_SRC+= acados_solver_vehicle_mpc.c
 
@@ -65,8 +72,8 @@ OBJ+= $(OCP_OBJ)
 EXTERNAL_DIR=
 EXTERNAL_LIB=
 
-INCLUDE_PATH = /home/purgatorio/acados/include
-LIB_PATH = /home/purgatorio/acados/lib
+INCLUDE_PATH = /home/yanghongyi/acados/include
+LIB_PATH = /home/yanghongyi/acados/lib
 
 # preprocessor flags for make's implicit rules
 CPPFLAGS+= -I$(INCLUDE_PATH)
@@ -120,7 +127,7 @@ ocp_cython_c: ocp_shared_lib
 	-o acados_ocp_solver_pyx.c \
 	-I $(INCLUDE_PATH)/../interfaces/acados_template/acados_template \
 	$(INCLUDE_PATH)/../interfaces/acados_template/acados_template/acados_ocp_solver_pyx.pyx \
-	-I /home/purgatorio/PDMproject/PDM_27/c_generated_code \
+	-I /home/yanghongyi/PDM_27/c_generated_code \
 
 ocp_cython_o: ocp_cython_c
 	$(CC) $(ACADOS_FLAGS) -c -O2 \
@@ -130,8 +137,8 @@ ocp_cython_o: ocp_cython_c
 	-I $(INCLUDE_PATH)/blasfeo/include/ \
 	-I $(INCLUDE_PATH)/hpipm/include/ \
 	-I $(INCLUDE_PATH) \
-	-I /home/purgatorio/miniconda3/lib/python3.12/site-packages/numpy/core/include \
-	-I /home/purgatorio/miniconda3/include/python3.12 \
+	-I /home/yanghongyi/PDM_27/venv/lib/python3.10/site-packages/numpy/_core/include \
+	-I /usr/include/python3.10 \
 	acados_ocp_solver_pyx.c \
 
 ocp_cython: ocp_cython_o

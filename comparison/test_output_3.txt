@@ -1,0 +1,803 @@
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+Successfully generated 8 dynamic obstacles.
+======================================================================
+RRT驱动的MPC快速测试
+======================================================================
+地图: 25.0x25.0
+起点: (1.0, 1.0), 终点: (23.0, 23.0)
+障碍物: 11 个
+======================================================================
+
+障碍物列表:
+  obs0: (8.0, 8.0) r=1.2
+  obs1: (12.0, 12.0) r=1.5
+  obs2: (17.0, 17.0) r=1.2
+  obs3: (5.0, 12.0) r=1.0
+  obs4: (4.0, 18.0) r=1.3
+  obs5: (18.0, 6.0) r=1.0
+  obs6: (20.0, 12.0) r=1.2
+  obs7: (10.0, 5.0) r=0.8
+  obs8: (15.0, 9.0) r=1.0
+  obs9: (9.0, 16.0) r=0.9
+  obs10: (14.0, 20.0) r=1.1
+
+[1] 规划RRT路径...
+[MPC_RRT] Path planned: 37 waypoints, time=0.054s, iterations=4381
+[MPC_RRT] path_len=43.0m. Pre-compiling 13 solvers (spacing ~2.5m).
+[MPC_RRT] Pre-compiled 13 solvers:
+  Solver 0: waypoint 1 -> target=(1.9, 1.8)
+  Solver 1: waypoint 4 -> target=(4.6, 4.1)
+  Solver 2: waypoint 7 -> target=(8.1, 3.3)
+  Solver 3: waypoint 10 -> target=(11.2, 1.6)
+  Solver 4: waypoint 13 -> target=(14.7, 0.8)
+  Solver 5: waypoint 16 -> target=(18.1, 1.7)
+  Solver 6: waypoint 19 -> target=(20.6, 4.2)
+  Solver 7: waypoint 22 -> target=(22.4, 7.3)
+  Solver 8: waypoint 25 -> target=(22.7, 10.8)
+  Solver 9: waypoint 28 -> target=(22.5, 14.4)
+  Solver 10: waypoint 31 -> target=(22.0, 18.0)
+  Solver 11: waypoint 34 -> target=(21.3, 21.5)
+  Solver 12: waypoint 36 -> target=(23.0, 23.0)
+  RRT规划: 成功
+  路径点数: 37
+  路径长度: 43.00m
+
+[2] RRT路径点:
+  WP0: (1.00, 1.00)
+  WP1: (1.87, 1.83)
+  WP2: (2.74, 2.65)
+  WP3: (3.69, 3.36)
+  WP4: (4.64, 4.07)
+  WP5: (5.81, 3.87)
+  WP6: (6.99, 3.67)
+  WP7: (8.11, 3.29)
+  WP8: (9.23, 2.91)
+  WP9: (10.22, 2.24)
+  WP10: (11.21, 1.57)
+  WP11: (12.36, 1.22)
+  WP12: (13.50, 0.87)
+  WP13: (14.70, 0.83)
+  WP14: (15.90, 0.78)
+  WP15: (16.99, 1.23)
+  WP16: (18.09, 1.67)
+  WP17: (19.01, 2.45)
+  WP18: (19.92, 3.22)
+  WP19: (20.64, 4.18)
+  WP20: (21.37, 5.13)
+  WP21: (21.88, 6.21)
+  WP22: (22.39, 7.30)
+  WP23: (22.57, 8.47)
+  WP24: (22.76, 9.65)
+  WP25: (22.71, 10.85)
+  WP26: (22.65, 12.04)
+  WP27: (22.56, 13.24)
+  WP28: (22.47, 14.44)
+  WP29: (22.34, 15.63)
+  WP30: (22.21, 16.82)
+  WP31: (22.04, 18.01)
+  WP32: (21.87, 19.19)
+  WP33: (21.59, 20.35)
+  WP34: (21.31, 21.51)
+  WP35: (22.17, 22.78)
+  WP36: (23.00, 23.00)
+
+[3] 预编译的Solver目标:
+  Solver0: waypoint1 -> (1.87, 1.83)
+  Solver1: waypoint4 -> (4.64, 4.07)
+  Solver2: waypoint7 -> (8.11, 3.29)
+  Solver3: waypoint10 -> (11.21, 1.57)
+  Solver4: waypoint13 -> (14.70, 0.83)
+  Solver5: waypoint16 -> (18.09, 1.67)
+  Solver6: waypoint19 -> (20.64, 4.18)
+  Solver7: waypoint22 -> (22.39, 7.30)
+  Solver8: waypoint25 -> (22.71, 10.85)
+  Solver9: waypoint28 -> (22.47, 14.44)
+  Solver10: waypoint31 -> (22.04, 18.01)
+  Solver11: waypoint34 -> (21.31, 21.51)
+  Solver12: waypoint36 -> (23.00, 23.00)
+
+[4] 插值后路径点数: 37
+
+[5] 沿RRT路径测试MPC反应...
+----------------------------------------------------------------------------------------------------
+Step |    Position     | Solver |     Target      |    Steer |    Accel | Status |  ObsDist | Notes
+----------------------------------------------------------------------------------------------------
+[MPC_RRT] Switched to solver 1, target=(4.6421728899657335, 4.071828218865164)
+   0 | (  1.00,  1.00) |      1 |    (4.6,4.1)    |  -0.3937 |  -0.5321 |      0 |    7.798 | BIG_STEER,RRT_MPC_DIVERGE(4.8m)
+   1 | (  1.87,  1.83) |      1 |    (4.6,4.1)    |   0.0000 |   0.0000 |      4 |    6.599 | FAIL,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 2, target=(8.110474157402379, 3.2880744747031696)
+   2 | (  2.74,  2.65) |      2 |    (8.1,3.3)    |  -0.7780 |  -1.2655 |      0 |    5.400 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(5.4m)
+   3 | (  3.69,  3.36) |      2 |    (8.1,3.3)    |  -0.7854 |  -1.9076 |      0 |    4.229 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.4m)
+   4 | (  4.64,  4.07) |      2 |    (8.1,3.3)    |  -0.7854 |  -3.0000 |      0 |    3.066 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 3, target=(11.21300981211585, 1.569766086549814)
+   5 | (  5.81,  3.87) |      3 |   (11.2,1.6)    |  -0.7854 |  -3.0000 |      0 |    2.570 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(5.9m)
+   6 | (  6.99,  3.67) |      3 |   (11.2,1.6)    |  -0.7854 |  -3.0000 |      0 |    1.592 | CLOSE_OBS(7),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.7m)
+   7 | (  8.11,  3.29) |      3 |   (11.2,1.6)    |  -0.7854 |  -1.3378 |      0 |    0.848 | CLOSE_OBS(7),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.5m)
+[MPC_RRT] Switched to solver 4, target=(14.6995345799048, 0.8270935852660455)
+   8 | (  9.23,  2.91) |      4 |   (14.7,0.8)    |  -0.7854 |   0.5000 |      0 |    0.528 | CLOSE_OBS(7),BIG_STEER,RRT_MPC_DIVERGE(5.8m)
+   9 | ( 10.22,  2.24) |      4 |   (14.7,0.8)    |  -0.7854 |  -3.0000 |      0 |    1.070 | CLOSE_OBS(7),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.7m)
+  10 | ( 11.21,  1.57) |      4 |   (14.7,0.8)    |  -0.7854 |  -3.0000 |      0 |    1.937 | CLOSE_OBS(7),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 5, target=(18.093338491365493, 1.6726028847159393)
+  11 | ( 12.36,  1.22) |      5 |   (18.1,1.7)    |  -0.3992 |  -3.0000 |      0 |    2.753 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(5.8m)
+  12 | ( 13.50,  0.87) |      5 |   (18.1,1.7)    |   0.7854 |  -3.0000 |      0 |    3.713 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.7m)
+  13 | ( 14.70,  0.83) |      5 |   (18.1,1.7)    |   0.7854 |  -3.0000 |      0 |    4.235 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.5m)
+[MPC_RRT] Switched to solver 6, target=(20.64399363065175, 4.177731065419051)
+  14 | ( 15.90,  0.78) |      6 |   (20.6,4.2)    |   0.7854 |  -3.0000 |      0 |    3.725 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(5.8m)
+  15 | ( 16.99,  1.23) |      6 |   (20.6,4.2)    |  -0.7854 |  -3.0000 |      0 |    2.976 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.7m)
+  16 | ( 18.09,  1.67) |      6 |   (20.6,4.2)    |  -0.7854 |  -3.0000 |      0 |    2.427 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 7, target=(22.38598387343953, 7.298437197762684)
+  17 | ( 19.01,  2.45) |      7 |   (22.4,7.3)    |  -0.7854 |  -3.0000 |      0 |    1.790 | CLOSE_OBS(5),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(5.9m)
+  18 | ( 19.92,  3.22) |      7 |   (22.4,7.3)    |  -0.7854 |  -3.0000 |      0 |    1.472 | CLOSE_OBS(5),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.8m)
+  19 | ( 20.64,  4.18) |      7 |   (22.4,7.3)    |  -0.7854 |  -0.2158 |      0 |    1.310 | CLOSE_OBS(5),BIG_STEER,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 8, target=(22.705678098535884, 10.846231056246332)
+  20 | ( 21.37,  5.13) |      8 |   (22.7,10.8)   |  -0.7854 |   0.9373 |      0 |    1.579 | CLOSE_OBS(5),BIG_STEER,RRT_MPC_DIVERGE(5.9m)
+  21 | ( 21.88,  6.21) |      8 |   (22.7,10.8)   |  -0.7854 |  -1.2620 |      0 |    1.983 | CLOSE_OBS(5),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.7m)
+  22 | ( 22.39,  7.30) |      8 |   (22.7,10.8)   |  -0.7854 |  -3.0000 |      0 |    2.673 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 9, target=(22.469020465534722, 14.437246654868703)
+  23 | ( 22.57,  8.47) |      9 |   (22.5,14.4)   |  -0.7854 |  -3.0000 |      0 |    2.265 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(6.0m)
+  24 | ( 22.76,  9.65) |      9 |   (22.5,14.4)   |  -0.7854 |  -3.0000 |      0 |    1.526 | CLOSE_OBS(6),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.8m)
+  25 | ( 22.71, 10.85) |      9 |   (22.5,14.4)   |  -0.7854 |  -2.9954 |      0 |    0.840 | CLOSE_OBS(6),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 10, target=(22.03767500063769, 18.007343559728106)
+  26 | ( 22.65, 12.04) |     10 |   (22.0,18.0)   |  -0.7854 |   3.0000 |      0 |    0.549 | CLOSE_OBS(6),BIG_STEER,RRT_MPC_DIVERGE(6.0m)
+  27 | ( 22.56, 13.24) |     10 |   (22.0,18.0)   |  -0.7854 |   3.0000 |      0 |    0.743 | CLOSE_OBS(6),BIG_STEER,RRT_MPC_DIVERGE(4.8m)
+  28 | ( 22.47, 14.44) |     10 |   (22.0,18.0)   |  -0.7854 |  -3.0000 |      0 |    1.368 | CLOSE_OBS(6),BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 11, target=(21.31494606777106, 21.50548726218412)
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+rm -f libacados_ocp_solver_vehicle_mpc.so
+rm -f vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o acados_solver_vehicle_mpc.o acados_solver_vehicle_mpc.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.c
+cc -fPIC -std=c99   -O2 -I/home/yanghongyi/acados/include -I/home/yanghongyi/acados/include/acados -I/home/yanghongyi/acados/include/blasfeo/include -I/home/yanghongyi/acados/include/hpipm/include  -c -o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.c
+cc -shared vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_0_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_hess.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_fun_jac_ut_xt.o vehicle_mpc_cost/vehicle_mpc_cost_y_e_hess.o acados_solver_vehicle_mpc.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun.o vehicle_mpc_model/vehicle_mpc_dyn_disc_phi_fun_jac.o -o libacados_ocp_solver_vehicle_mpc.so -L/home/yanghongyi/acados/lib -lacados -lhpipm -lblasfeo -lm \
+-L -l
+  29 | ( 22.34, 15.63) |     11 |   (21.3,21.5)   |  -0.7854 |  -3.0000 |      0 |    2.217 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(6.0m)
+  30 | ( 22.21, 16.82) |     11 |   (21.3,21.5)   |   0.4871 |  -3.0000 |      0 |    3.110 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.8m)
+  31 | ( 22.04, 18.01) |     11 |   (21.3,21.5)   |   0.7854 |  -3.0000 |      0 |    3.036 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.6m)
+[MPC_RRT] Switched to solver 12, target=(23.0, 23.0)
+  32 | ( 21.87, 19.19) |     12 |   (23.0,23.0)   |   0.7854 |  -3.0000 |      0 |    3.236 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(4.0m)
+  33 | ( 21.59, 20.35) |     12 |   (23.0,23.0)   |   0.7854 |  -3.0000 |      0 |    3.581 | BIG_STEER,BRAKE,RRT_MPC_DIVERGE(3.0m)
+  34 | ( 21.31, 21.51) |     12 |   (23.0,23.0)   |  -0.7854 |  -3.0000 |      0 |    4.137 | BIG_STEER,BRAKE
+  35 | ( 22.17, 22.78) |     12 |   (23.0,23.0)   |  -0.7854 |  -3.0000 |      0 |    5.655 | BIG_STEER,BRAKE
+  36 | ( 23.00, 23.00) |     12 |    (0.0,0.0)    |   0.0000 |  -1.0000 |      0 |    6.384 | RRT_MPC_DIVERGE(32.5m)
+----------------------------------------------------------------------------------------------------
+
+[6] 统计分析:
+
+  Solver切换记录:
+    Step 0: -> Solver1 at (1.00, 1.00)
+    Step 2: -> Solver2 at (2.74, 2.65)
+    Step 5: -> Solver3 at (5.81, 3.87)
+    Step 8: -> Solver4 at (9.23, 2.91)
+    Step 11: -> Solver5 at (12.36, 1.22)
+    Step 14: -> Solver6 at (15.90, 0.78)
+    Step 17: -> Solver7 at (19.01, 2.45)
+    Step 20: -> Solver8 at (21.37, 5.13)
+    Step 23: -> Solver9 at (22.57, 8.47)
+    Step 26: -> Solver10 at (22.65, 12.04)
+    Step 29: -> Solver11 at (22.34, 15.63)
+    Step 32: -> Solver12 at (21.87, 19.19)
+
+  接近障碍物的步数: 15/37
+  详细:
+    Step 6: pos=(6.99,3.67) obs_dist=1.592 obs_idx=7
+    Step 7: pos=(8.11,3.29) obs_dist=0.848 obs_idx=7
+    Step 8: pos=(9.23,2.91) obs_dist=0.528 obs_idx=7
+    Step 9: pos=(10.22,2.24) obs_dist=1.070 obs_idx=7
+    Step 10: pos=(11.21,1.57) obs_dist=1.937 obs_idx=7
+    Step 17: pos=(19.01,2.45) obs_dist=1.790 obs_idx=5
+    Step 18: pos=(19.92,3.22) obs_dist=1.472 obs_idx=5
+    Step 19: pos=(20.64,4.18) obs_dist=1.310 obs_idx=5
+    Step 20: pos=(21.37,5.13) obs_dist=1.579 obs_idx=5
+    Step 21: pos=(21.88,6.21) obs_dist=1.983 obs_idx=5
+
+  MPC求解失败步数: 1/37
+
+  转向统计: min=-0.7854, max=0.7854, mean=-0.4326
+  加速统计: min=-3.0000, max=3.0000, mean=-2.0292
+
+[7] 日志已保存: /home/yanghongyi/PDM_27/logs/rrt_drive_test_2026-01-11_20-35-52.json
+======================================================================
+
+======================================================================
+障碍物附近MPC行为分析
+======================================================================
+[MPC_RRT] Path planned: 38 waypoints, time=0.021s, iterations=1940
+[MPC_RRT] path_len=43.6m. Pre-compiling 13 solvers (spacing ~2.5m).
+[MPC_RRT] Pre-compiled 13 solvers:
+  Solver 0: waypoint 1 -> target=(1.9, 1.8)
+  Solver 1: waypoint 4 -> target=(4.9, 3.5)
+  Solver 2: waypoint 7 -> target=(8.0, 1.7)
+  Solver 3: waypoint 10 -> target=(11.4, 0.8)
+  Solver 4: waypoint 13 -> target=(14.9, 1.6)
+  Solver 5: waypoint 16 -> target=(18.3, 2.3)
+  Solver 6: waypoint 19 -> target=(21.7, 2.7)
+  Solver 7: waypoint 22 -> target=(23.6, 5.6)
+  Solver 8: waypoint 25 -> target=(23.5, 9.1)
+  Solver 9: waypoint 28 -> target=(22.7, 12.5)
+  Solver 10: waypoint 31 -> target=(23.4, 16.0)
+  Solver 11: waypoint 34 -> target=(23.4, 19.6)
+  Solver 12: waypoint 37 -> target=(23.0, 23.0)
+
+分析RRT路径上每个点与障碍物的关系:
+--------------------------------------------------------------------------------
+[MPC_RRT] Switched to solver 1, target=(4.867289155034462, 3.486100662622831)
+WP3: (3.79, 3.08)
+  最近障碍物: obs0 at (8.0, 8.0), dist=4.372m
+  MPC控制: steer=-0.0255, accel=-2.5055, status=0
+  当前solver: 1, target=(4.867289155034462, 3.486100662622831)
+
+[MPC_RRT] Switched to solver 2, target=(7.969223186045039, 1.7131821635213016)
+WP4: (4.87, 3.49)
+  最近障碍物: obs0 at (8.0, 8.0), dist=3.393m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 2, target=(7.969223186045039, 1.7131821635213016)
+
+[MPC_RRT] Switched to solver 3, target=(11.39628094489824, 0.7556831595884343)
+WP5: (5.88, 2.85)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.948m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 3, target=(11.39628094489824, 0.7556831595884343)
+
+WP6: (6.88, 2.22)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.475m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 3, target=(11.39628094489824, 0.7556831595884343)
+
+WP7: (7.97, 1.71)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.162m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 3, target=(11.39628094489824, 0.7556831595884343)
+
+[MPC_RRT] Switched to solver 4, target=(14.878588912149414, 1.5978614538692324)
+WP8: (9.06, 1.21)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.208m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 4, target=(14.878588912149414, 1.5978614538692324)
+
+WP9: (10.23, 0.98)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.324m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 4, target=(14.878588912149414, 1.5978614538692324)
+
+WP10: (11.40, 0.76)
+  最近障碍物: obs7 at (10.0, 5.0), dist=2.767m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 4, target=(14.878588912149414, 1.5978614538692324)
+
+[MPC_RRT] Switched to solver 5, target=(18.34554165613458, 2.3315204046293228)
+WP11: (12.57, 0.97)
+  最近障碍物: obs7 at (10.0, 5.0), dist=3.081m
+  MPC控制: steer=0.0222, accel=-3.0000, status=0
+  当前solver: 5, target=(18.34554165613458, 2.3315204046293228)
+
+WP12: (13.75, 1.18)
+  最近障碍物: obs7 at (10.0, 5.0), dist=3.651m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 5, target=(18.34554165613458, 2.3315204046293228)
+
+WP13: (14.88, 1.60)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.495m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 5, target=(18.34554165613458, 2.3315204046293228)
+
+[MPC_RRT] Switched to solver 6, target=(21.70598501867974, 2.7372977116019435)
+WP14: (16.00, 2.01)
+  最近障碍物: obs5 at (18.0, 6.0), dist=2.557m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 6, target=(21.70598501867974, 2.7372977116019435)
+
+WP15: (17.17, 2.17)
+  最近障碍物: obs5 at (18.0, 6.0), dist=2.014m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 6, target=(21.70598501867974, 2.7372977116019435)
+
+WP16: (18.35, 2.33)
+  最近障碍物: obs5 at (18.0, 6.0), dist=1.783m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 6, target=(21.70598501867974, 2.7372977116019435)
+
+[MPC_RRT] Switched to solver 7, target=(23.556991802420846, 5.574447730271672)
+WP17: (19.52, 2.23)
+  最近障碍物: obs5 at (18.0, 6.0), dist=2.166m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 7, target=(23.556991802420846, 5.574447730271672)
+
+WP18: (20.70, 2.12)
+  最近障碍物: obs5 at (18.0, 6.0), dist=2.822m
+  MPC控制: steer=-0.5817, accel=-3.0000, status=0
+  当前solver: 7, target=(23.556991802420846, 5.574447730271672)
+
+WP19: (21.71, 2.74)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.036m
+  MPC控制: steer=0.5187, accel=-3.0000, status=0
+  当前solver: 7, target=(23.556991802420846, 5.574447730271672)
+
+[MPC_RRT] Switched to solver 8, target=(23.522237155139578, 9.115970850661919)
+WP20: (22.71, 3.35)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.506m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 8, target=(23.522237155139578, 9.115970850661919)
+
+WP21: (23.14, 4.46)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.459m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 8, target=(23.522237155139578, 9.115970850661919)
+
+WP22: (23.56, 5.57)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.672m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 8, target=(23.522237155139578, 9.115970850661919)
+
+[MPC_RRT] Switched to solver 9, target=(22.662715829758312, 12.504526652233647)
+WP23: (23.66, 6.76)
+  最近障碍物: obs5 at (18.0, 6.0), dist=3.810m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 9, target=(22.662715829758312, 12.504526652233647)
+
+WP24: (23.76, 7.94)
+  最近障碍物: obs6 at (20.0, 12.0), dist=3.432m
+  MPC控制: steer=0.6930, accel=-3.0000, status=0
+  当前solver: 9, target=(22.662715829758312, 12.504526652233647)
+
+WP25: (23.52, 9.12)
+  最近障碍物: obs6 at (20.0, 12.0), dist=2.451m
+  MPC控制: steer=-0.7854, accel=-3.0000, status=0
+  当前solver: 9, target=(22.662715829758312, 12.504526652233647)
+
+[MPC_RRT] Switched to solver 10, target=(23.350590564529824, 16.022900527240537)
+WP26: (23.28, 10.29)
+  最近障碍物: obs6 at (20.0, 12.0), dist=1.598m
+  MPC控制: steer=-0.7854, accel=3.0000, status=0
+  当前solver: 10, target=(23.350590564529824, 16.022900527240537)
+
+WP27: (22.97, 11.40)
+  最近障碍物: obs6 at (20.0, 12.0), dist=0.931m
+  MPC控制: steer=-0.7854, accel=3.0000, status=0
+  当前solver: 10, target=(23.350590564529824, 16.022900527240537)
+
+WP28: (22.66, 12.50)
+  最近障碍物: obs6 at (20.0, 12.0), dist=0.609m
+  MPC控制: steer=-0.7854, accel=3.0000, status=0
+  当前solver: 10, target=(23.350590564529824, 16.022900527240537)
+
+[MPC_RRT] Switched to solver 11, target=(23.445295228338694, 19.61596222264634)
+WP29: (22.95, 13.67)
+  最近障碍物: obs6 at (20.0, 12.0), dist=1.287m
+  MPC控制: steer=-0.2835, accel=-3.0000, status=0
+  当前solver: 11, target=(23.445295228338694, 19.61596222264634)
+
+WP30: (23.24, 14.83)
+  最近障碍物: obs6 at (20.0, 12.0), dist=2.198m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 11, target=(23.445295228338694, 19.61596222264634)
+
+WP31: (23.35, 16.02)
+  最近障碍物: obs6 at (20.0, 12.0), dist=3.134m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 11, target=(23.445295228338694, 19.61596222264634)
+
+[MPC_RRT] Switched to solver 12, target=(23.0, 23.0)
+WP32: (23.46, 17.22)
+  最近障碍物: obs6 at (20.0, 12.0), dist=4.161m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 12, target=(23.0, 23.0)
+
+WP33: (23.45, 18.42)
+  最近障碍物: obs2 at (17.0, 17.0), dist=4.506m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 12, target=(23.0, 23.0)
+
+WP34: (23.45, 19.62)
+  最近障碍物: obs2 at (17.0, 17.0), dist=4.854m
+  MPC控制: steer=0.7854, accel=-3.0000, status=0
+  当前solver: 12, target=(23.0, 23.0)
+
+
+SQP_RTI: QP solver returned error status 1 (ACADOS_NAN_DETECTED) QP iteration 1.
