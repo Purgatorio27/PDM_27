@@ -187,6 +187,10 @@ goal_tolerance = 0.3
 goal_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.5, rgbaColor=[0, 1, 0, 0.8])
 goal_body = p.createMultiBody(baseMass=0, baseVisualShapeIndex=goal_marker, basePosition=[goal[0], goal[1], 0.1])
 
+# Lists to store visualization item IDs
+predicted_path_visuals = []
+traversed_path_visuals = []
+
 
 def compute_min_obstacle_distance(car_pos, static_obs, dyn_obs_positions):
     """Compute minimum distance to any obstacle"""
@@ -249,6 +253,7 @@ def __main__():
 
     # Initialize car state
     car_state = np.array([0.0, 0.0, 1.0, np.radians(45)])  # x, y, v, psi
+    last_traversed_pos = car_state[0:2].copy()
     solver_status = 0
     
     # ===== Initialize Data Logger =====
@@ -421,6 +426,33 @@ def __main__():
         car_pos = [car_state[0], car_state[1], 0.1]
         car_orn = p.getQuaternionFromEuler([0, 0, car_state[3]])
         p.resetBasePositionAndOrientation(car_id, car_pos, car_orn)
+
+        # ===== Visualize Traversed and Predicted Paths =====
+        # Clear previous predicted path
+        for item in predicted_path_visuals:
+            p.removeUserDebugItem(item)
+        predicted_path_visuals.clear()
+
+        # Draw new predicted path
+        if step % 5 == 0:  # update every 5 steps
+            if len(mpc_predicted_traj) > 1:
+                try:
+                    for i in range(min(len(mpc_predicted_traj) - 1, 10)):
+                        p_start = [mpc_predicted_traj[i][0], mpc_predicted_traj[i][1], 0.1]
+                        p_end = [mpc_predicted_traj[i+1][0], mpc_predicted_traj[i+1][1], 0.1]
+                        line_id = p.addUserDebugLine(p_start, p_end, [0.5, 0, 0.5], 2, lifeTime = 0.3) # Purple line
+                        predicted_path_visuals.append(line_id)
+                except:
+                    pass
+
+        # Draw traversed path
+        current_pos = car_state[0:2]
+        
+        line_id = p.addUserDebugLine([last_traversed_pos[0], last_traversed_pos[1], 0.1], 
+                                    [current_pos[0], current_pos[1], 0.1], 
+                                    [0, 0.5, 0], 5) # Green line
+            
+        last_traversed_pos = current_pos.copy()
 
         # Compute distances for debug
         dist_to_goal = math.hypot(car_state[0] - goal[0], car_state[1] - goal[1])
