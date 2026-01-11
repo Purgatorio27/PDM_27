@@ -8,23 +8,16 @@ import os
 from datetime import datetime
 
 # Import existing modules
-from Obstacles import static_obstacles as generated_static, dynamic_obstacles as generated_dynamic, load_obstacles
+from Obstacles import static_obstacles, dynamic_obstacles, save_obstacles
 from Config import T, max_steps, dt, goal, lf, lr, vehicle_length, vehicle_width, vehicle_radius, \
     max_speed, min_speed, max_acceleration, max_deceleration, max_steering_angle, \
     controller_dt, sim_dt, sim_speed, mpc_horizon, mpc_dt
-from MPC_core import MPC
+from MPC_RRT import create_mpc_rrt_controller
 
-# Try to load saved obstacles from RRT+MPC run, otherwise use generated ones
-loaded_static, loaded_dynamic = load_obstacles()
-if loaded_static is not None and loaded_dynamic is not None:
-    static_obstacles = loaded_static
-    dynamic_obstacles = loaded_dynamic
-    print("[MPC] Using saved obstacle configuration from previous RRT+MPC run")
-else:
-    static_obstacles = generated_static
-    dynamic_obstacles = generated_dynamic
-    print("[MPC] WARNING: No saved obstacles found. Using newly generated obstacles.")
-    print("[MPC] Run RRT+MPC simulation first to generate a map for comparison.")
+# Save the generated obstacles so MPC-only simulation can use the same map
+save_obstacles(static_obstacles, dynamic_obstacles)
+print("[RRT+MPC] Saved obstacle configuration for MPC-only simulation to use")
+
 
 # Initialize PyBullet simulation
 import sys
@@ -196,7 +189,8 @@ for d_obs in dynamic_obstacles:
         'radius': d_obs['radius']
     })
 
-mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon=mpc_horizon, dt=mpc_dt)
+# mpc_controller moved to __main__
+# mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon=mpc_horizon, dt=mpc_dt)
 
 # Final simulation setup
 goal_tolerance = 0.3
@@ -204,6 +198,66 @@ goal_tolerance = 0.3
 # Debug visualization setup
 goal_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.5, rgbaColor=[0, 1, 0, 0.8])
 goal_body = p.createMultiBody(baseMass=0, baseVisualShapeIndex=goal_marker, basePosition=[goal[0], goal[1], 0.1])
+
+
+def draw_rrt_path(controller, pybullet_client):
+    """
+    Draw the RRT path and waypoints in PyBullet.
+
+    Args:
+        controller: MPC_RRT_Controller instance
+        pybullet_client: PyBullet client (p)
+
+    Returns:
+        List of debug line IDs (for cleanup if needed)
+    """
+    line_ids = []
+
+    # Get path visualization data
+    path_data = controller.get_path_visualization()
+
+    rrt_x = path_data.get('rrt_path_x', [])
+    rrt_y = path_data.get('rrt_path_y', [])
+    wp_x = path_data.get('waypoint_x', [])
+    wp_y = path_data.get('waypoint_y', [])
+
+    print(f"[DEBUG] RRT path points: {len(rrt_x)}, Waypoints: {len(wp_x)}")
+    if len(rrt_x) > 0:
+        print(f"[DEBUG] RRT path start: ({rrt_x[0]:.2f}, {rrt_y[0]:.2f}), end: ({rrt_x[-1]:.2f}, {rrt_y[-1]:.2f})")
+    if len(wp_x) > 0:
+        print(f"[DEBUG] Waypoints start: ({wp_x[0]:.2f}, {wp_y[0]:.2f}), end: ({wp_x[-1]:.2f}, {wp_y[-1]:.2f})")
+
+    # Draw RRT path as cyan lines (thicker, higher z for visibility)
+    if len(rrt_x) > 1:
+        for i in range(len(rrt_x) - 1):
+            line_id = pybullet_client.addUserDebugLine(
+                [rrt_x[i], rrt_y[i], 0.5],
+                [rrt_x[i+1], rrt_y[i+1], 0.5],
+                lineColorRGB=[0, 1, 1],  # Cyan
+                lineWidth=5.0,
+                lifeTime=0  # Permanent
+            )
+            line_ids.append(line_id)
+        print(f"[DEBUG] Drew {len(rrt_x)-1} RRT path line segments")
+
+    # Draw waypoints as small spheres (magenta) - higher z for visibility
+    for i, (wx, wy) in enumerate(zip(wp_x, wp_y)):
+        # Create small sphere marker for each waypoint
+        wp_marker = pybullet_client.createVisualShape(
+            pybullet_client.GEOM_SPHERE,
+            radius=0.4,
+            rgbaColor=[1, 0, 1, 1.0]  # Magenta, fully opaque
+        )
+        wp_body = pybullet_client.createMultiBody(
+            baseMass=0,
+            baseVisualShapeIndex=wp_marker,
+            basePosition=[wx, wy, 0.5]
+        )
+        line_ids.append(wp_body)
+
+    print(f"[Visualization] Drew RRT path with {len(rrt_x)} points, {len(wp_x)} waypoints")
+
+    return line_ids
 
 
 def compute_min_obstacle_distance(car_pos, static_obs, dyn_obs_positions):
@@ -267,6 +321,35 @@ def __main__():
 
     # Initialize car state
     car_state = np.array([0.0, 0.0, 1.0, np.radians(45)])  # x, y, v, psi
+
+    # Initialize dynamic obstacle state at step 0 (to feed MPC_core)
+    cur_dyn_obs_MPC = []
+    for d_obs in dynamic_obstacles:
+        cur_dyn_obs_MPC.append({
+            'trajectory': d_obs['trajectory'][0],
+            'radius': d_obs['radius']
+        })
+
+    # Create MPC+RRT Controller
+    print("Creating MPC+RRT Controller...")
+    mpc_controller = create_mpc_rrt_controller(
+        start_state=list(car_state),
+        goal=goal,
+        static_obstacles=static_obstacles,
+        dynamic_obstacles=cur_dyn_obs_MPC,
+        horizon=mpc_horizon,
+        dt=mpc_dt,
+        map_size=45.0  # Must be larger than goal position (40, 40)
+    )
+    # Ensure dynamic obstacles are set on the controller instance
+    if hasattr(mpc_controller, 'solver_pool'):
+        for solver in mpc_controller.solver_pool:
+            solver.dynamic_obstacles = cur_dyn_obs_MPC
+    mpc_controller.dynamic_obstacles = cur_dyn_obs_MPC
+
+    # Draw the RRT path in PyBullet visualization
+    rrt_visual_ids = draw_rrt_path(mpc_controller, p)
+
     solver_status = 0
     
     # ===== Initialize Data Logger =====
@@ -317,7 +400,12 @@ def __main__():
                 'radius': d_obs['radius']
             })
 
-        mpc_controller.dynamic_obstacles = cur_dyn_obs_MPC
+        # Update dynamic obstacles for all solvers in the pool
+        if hasattr(mpc_controller, 'solver_pool'):
+            for solver in mpc_controller.solver_pool:
+                solver.dynamic_obstacles = cur_dyn_obs_MPC
+        else:
+             mpc_controller.dynamic_obstacles = cur_dyn_obs_MPC
 
         #Solve MPC with debug for first 20 steps
         solve_start_time = time.time()

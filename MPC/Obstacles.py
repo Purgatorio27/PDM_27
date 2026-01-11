@@ -1,7 +1,12 @@
 from Trajectory_generator_obs import generate_obs_trajectory
 import numpy as np
 import casadi as ca
+import json
+import os
 from Config import max_steps, controller_dt, sim_dt, sim_speed, vehicle_radius
+
+# Path to save/load obstacle configuration
+OBSTACLE_CONFIG_FILE = os.path.join(os.path.dirname(__file__), 'saved_obstacles.json')
 
 barrel_radius = 1.2  # radius of barrel obstacles
 block_radius = 1.4   # radius of block obstacles
@@ -140,7 +145,82 @@ print(f"Successfully generated {len(dynamic_obstacles)} dynamic obstacles.")
 
 def distance(pos1, pos2, radius1=0.0, radius2=0.0):
     """
-    Compute obstacle distance (considering radius) - CasADi version  
+    Compute obstacle distance (considering radius) - CasADi version
     """
     dist = ca.sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2) - (radius1 + radius2)
     return dist
+
+
+def save_obstacles(static_obs, dynamic_obs, filepath=None):
+    """
+    Save obstacle configuration to JSON file.
+
+    Args:
+        static_obs: List of static obstacles
+        dynamic_obs: List of dynamic obstacles
+        filepath: Path to save file (default: OBSTACLE_CONFIG_FILE)
+    """
+    if filepath is None:
+        filepath = OBSTACLE_CONFIG_FILE
+
+    # Convert to serializable format
+    static_data = []
+    for obs in static_obs:
+        static_data.append({
+            'position': list(obs['position']),
+            'type': obs['type'],
+            'radius': obs['radius']
+        })
+
+    dynamic_data = []
+    for obs in dynamic_obs:
+        dynamic_data.append({
+            'reference velocity': list(obs['reference velocity']),
+            'trajectory': obs['trajectory'].tolist(),  # numpy array to list
+            'radius': obs['radius']
+        })
+
+    data = {
+        'static_obstacles': static_data,
+        'dynamic_obstacles': dynamic_data
+    }
+
+    with open(filepath, 'w') as f:
+        json.dump(data, f, indent=2)
+
+    print(f"[Obstacles] Saved {len(static_obs)} static and {len(dynamic_obs)} dynamic obstacles to {filepath}")
+
+
+def load_obstacles(filepath=None):
+    """
+    Load obstacle configuration from JSON file.
+
+    Args:
+        filepath: Path to load file (default: OBSTACLE_CONFIG_FILE)
+
+    Returns:
+        (static_obstacles, dynamic_obstacles) tuple, or (None, None) if file not found
+    """
+    if filepath is None:
+        filepath = OBSTACLE_CONFIG_FILE
+
+    if not os.path.exists(filepath):
+        print(f"[Obstacles] No saved obstacles found at {filepath}")
+        return None, None
+
+    with open(filepath, 'r') as f:
+        data = json.load(f)
+
+    static_obs = data.get('static_obstacles', [])
+
+    dynamic_obs = []
+    for obs in data.get('dynamic_obstacles', []):
+        dynamic_obs.append({
+            'reference velocity': obs['reference velocity'],
+            'trajectory': np.array(obs['trajectory']),  # list back to numpy array
+            'radius': obs['radius']
+        })
+
+    print(f"[Obstacles] Loaded {len(static_obs)} static and {len(dynamic_obs)} dynamic obstacles from {filepath}")
+
+    return static_obs, dynamic_obs

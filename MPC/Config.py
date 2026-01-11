@@ -24,7 +24,7 @@ sim_dt = 0.01  # fine-grained simulation dt for obstacle trajectories
 sim_speed = 1.0  # obstacle speed multiplier (obstacles move this much faster)
 
 dt = controller_dt  # for backward compatibility
-max_steps = 500  # maximum number of simulation steps
+max_steps = 1000  # maximum number of simulation steps
 T = controller_dt * max_steps  # total simulation time in seconds
 
 # MPC parameters
