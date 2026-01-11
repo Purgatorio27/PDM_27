@@ -91,7 +91,7 @@ class MPC:
         self.ocp.solver_options.qp_solver_iter_max = 600
         self.ocp.solver_options.nlp_solver_max_iter = 500  # More iterations for convergence
         self.ocp.solver_options.tol = 1e-5  # Tighter tolerance
-        self.ocp.solver_options.qp_solver_cond_N = 5  # partial condensing
+        self.ocp.solver_options.qp_solver_cond_N = 10  # partial condensing
         
         # Regularization for numerical stability
         self.ocp.solver_options.levenberg_marquardt = 1e-2
@@ -175,7 +175,6 @@ class MPC:
             dist = distance(self.states[0:2], position, radius1=self.cfg.vehicle_radius, radius2=radius)
             # Exponential barrier: becomes very large when dist approaches 0
             cost += Q_obs * ca.exp(-dist / obs_scale)   # TODO: cost too low?
-            # cost += Q_obs * (1/(dist + 1e-3)**4)  # Inverse distance cost
             
             # Soft constraint: quadratic penalty when closer than safety margin
             violation = ca.fmax(0, safety_margin - dist)    # TODO: to be smoothened?
