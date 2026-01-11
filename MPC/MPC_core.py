@@ -88,9 +88,9 @@ class MPC:
         self.ocp.solver_options.integrator_type = 'DISCRETE'
         self.ocp.solver_options.nlp_solver_type = 'SQP'  # Full SQP for better convergence
 
-        self.ocp.solver_options.qp_solver_iter_max = 200
-        self.ocp.solver_options.nlp_solver_max_iter = 100  # More iterations for convergence
-        self.ocp.solver_options.tol = 1e-4  # Tighter tolerance
+        self.ocp.solver_options.qp_solver_iter_max = 600
+        self.ocp.solver_options.nlp_solver_max_iter = 500  # More iterations for convergence
+        self.ocp.solver_options.tol = 1e-5  # Tighter tolerance
         self.ocp.solver_options.qp_solver_cond_N = 5  # partial condensing
         
         # Regularization for numerical stability
@@ -148,7 +148,7 @@ class MPC:
         Q_terminal_goal = 20.0 # Terminal goal - very important
         Q_input_a = 0.1  # Allow acceleration changes
         Q_input_delta = 0.5  # Allow steering for avoidance
-        Q_velocity = 0.5  # Maintain speed
+        Q_velocity = 500  # Maintain speed
         Q_heading = 2.0  # Heading towards goal
         Q_terminal_heading = 20.0  # Terminal heading towards goal
 
@@ -174,7 +174,8 @@ class MPC:
             radius = static_obs['radius']
             dist = distance(self.states[0:2], position, radius1=self.cfg.vehicle_radius, radius2=radius)
             # Exponential barrier: becomes very large when dist approaches 0
-            cost += Q_obs * ca.exp(-dist / obs_scale)
+            cost += Q_obs * ca.exp(-dist / obs_scale)   # TODO: cost too low?
+            # cost += Q_obs * (1/(dist + 1e-3)**4)  # Inverse distance cost
             
             # Soft constraint: quadratic penalty when closer than safety margin
             violation = ca.fmax(0, safety_margin - dist)    # TODO: to be smoothened?
@@ -187,6 +188,7 @@ class MPC:
             dist_dyn = distance(self.states[0:2], ca.vertcat(obs_x, obs_y),
                                 radius1=self.cfg.vehicle_radius, radius2=self.dynamic_obstacles[i]['radius'])
             cost += Q_obs * ca.exp(-dist_dyn / obs_scale)
+
             violation_dyn = ca.fmax(0, safety_margin - dist_dyn)    # TODO: to be smoothened?
             cost += Q_close_penalty * violation_dyn**2
 
@@ -195,7 +197,7 @@ class MPC:
         cost += Q_input_a * self.controls[1]**2  # acceleration
 
         # Velocity cost - encourage steady forward motion
-        v_ref = 0.5 * cfg.max_speed  # target speed 
+        v_ref = 0.4 * cfg.max_speed  # target speed 
         cost += Q_velocity * (self.states[2] - v_ref)**2
 
         # Transient cost type setting
@@ -232,8 +234,8 @@ class MPC:
         goal_angle = math.atan2(goal_y - y0, goal_x - x0)
         v_init = max(v0, 2.0)
         
-        # Check if straight line path intersects any obstacle
-        def check_collision(x, y):
+        # Check possible collision on straight path to goal
+        def check_collision(x, y, step_i):
             """Check if point (x,y) is too close to any obstacle"""
             min_safe_dist = 2.0  # safety margin
             for obs in self.static_obstacles:
@@ -242,6 +244,19 @@ class MPC:
                 dist = math.sqrt((x - ox)**2 + (y - oy)**2) - r - self.cfg.vehicle_radius
                 if dist < min_safe_dist:
                     return True, (ox, oy, r)
+                
+            current_time = step_i * self.dt
+
+            for obs in self.dynamic_obstacles:
+                curr_x, curr_y, vx, vy = obs['trajectory']
+                pred_ox = curr_x + vx * current_time
+                pred_oy = curr_y + vy * current_time
+                r = obs['radius']
+                
+                dist = math.sqrt((x - pred_ox)**2 + (y - pred_oy)**2) - r - self.cfg.vehicle_radius
+                if dist < min_safe_dist:
+                    return True, (pred_ox, pred_oy, r)
+                
             return False, None
         
         # Find first collision point on straight path
@@ -251,7 +266,8 @@ class MPC:
             t = i * self.dt
             x_check = x0 + v_init * math.cos(goal_angle) * t
             y_check = y0 + v_init * math.sin(goal_angle) * t
-            has_collision, obs_info = check_collision(x_check, y_check)
+            has_collision, obs_info = check_collision(x_check, y_check, i)
+
             if has_collision:
                 collision_found = True
                 collision_obs = obs_info

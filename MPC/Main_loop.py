@@ -23,7 +23,7 @@ p.setTimeStep(dt)
 # Load plane and vehicle model
 planeId = p.loadURDF("plane.urdf", [0, 0, 0])
 
-p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89.9, cameraTargetPosition=[8,10,0])
+p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89.9, cameraTargetPosition=[18,18,0])
 car_half_extents = [vehicle_length / 2, vehicle_width / 2, 0.05]
 collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=vehicle_radius)  # Spherical collision shape
 car_visualized = p.createVisualShape(p.GEOM_BOX, halfExtents=car_half_extents, rgbaColor=[1, 0, 0, 1])  
@@ -43,14 +43,14 @@ for obs in static_obstacles:
     pos_3d = list(obs['position']) + [0.1] # z = 0.1
 
     # Spherical equivalent for both circle and square obstacles
-    col_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=0.2)
+    col_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=2)
     
     # Visual shape differs based on type
     if obs['type'] == 'circle':
-        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 0.2, rgbaColor=[0, 0, 0, 1.0])  # green circle
+        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 2, rgbaColor=[0, 0, 1, 0.8])  # green circle
     else:  # square 
         half_side = obs['radius'] / math.sqrt(2)
-        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 0.05], rgbaColor=[0, 0, 1, 0.8])  # blue square
+        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 2], rgbaColor=[0, 0, 1, 0.8])  # blue square
 
     body_id = p.createMultiBody(
         baseMass = 0.0,  # static
