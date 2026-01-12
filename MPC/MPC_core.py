@@ -169,7 +169,7 @@ class MPC:
         W_heading = 2.0      # Heading alignment weight
         W_velocity = 2.0     # Velocity tracking weight
         W_steer = 0.01       # Steering effort
-        W_accel = 0.01       # Acceleration effort
+        W_accel = 0.01      # Acceleration effort
         W_obs = 10000.0       # Obstacle avoidance weight (Increased significantly for safety)
         W_obs_velocity = 500.0  # Velocity-dependent obstacle penalty (Increased)
         
@@ -293,7 +293,7 @@ class MPC:
         terminal_weights.append(2.0)
         terminal_refs.append(0.0)
         
-        # Terminal obstacle avoidance (position + velocity)
+        # # Terminal obstacle avoidance (position + velocity)
         for static_obs in self.static_obstacles:
             position = ca.DM(static_obs['position'])
             radius = static_obs['radius']

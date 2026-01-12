@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 
 # Import existing modules
-from Obstacles import static_obstacles, dynamic_obstacles, save_obstacles
+from Obstacles import static_obstacles, dynamic_obstacles, load_obstacles, save_obstacles
 from Config import T, max_steps, dt, goal, lf, lr, vehicle_length, vehicle_width, vehicle_radius, \
     max_speed, min_speed, max_acceleration, max_deceleration, max_steering_angle, \
     controller_dt, sim_dt, sim_speed, mpc_horizon, mpc_dt
@@ -17,6 +17,18 @@ from MPC_RRT import create_mpc_rrt_controller
 # Save the generated obstacles so MPC-only simulation can use the same map
 save_obstacles(static_obstacles, dynamic_obstacles)
 print("[RRT+MPC] Saved obstacle configuration for MPC-only simulation to use")
+
+
+'''
+If we want to load saved obstacles from previous RRT+MPC run, uncomment below: (same environment, multiple runs)
+'''
+# # Try to load saved obstacles from RRT+MPC run, otherwise use generated ones
+# loaded_static, loaded_dynamic = load_obstacles()
+# if loaded_static is not None and loaded_dynamic is not None:
+#     static_obstacles = loaded_static
+#     dynamic_obstacles = loaded_dynamic
+#     print("[MPC] Using saved obstacle configuration from previous RRT+MPC run")
+
 
 
 # Initialize PyBullet simulation
@@ -34,7 +46,7 @@ p.setTimeStep(dt)
 # Load plane and vehicle model
 planeId = p.loadURDF("plane.urdf", [0, 0, 0])
 
-p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89.9, cameraTargetPosition=[18,18,0])
+p.resetDebugVisualizerCamera(cameraDistance=30, cameraYaw=0, cameraPitch=-89.9, cameraTargetPosition=[19,20,0])
 car_half_extents = [vehicle_length / 2, vehicle_width / 2, 0.05]
 collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=vehicle_radius)  # Spherical collision shape
 car_visualized = p.createVisualShape(p.GEOM_BOX, halfExtents=car_half_extents, rgbaColor=[1, 0, 0, 1])  
@@ -53,19 +65,19 @@ stat_body_ids = []
 for obs in static_obstacles:
     pos_3d = list(obs['position']) + [0.1] # z = 0.1
 
-    # Spherical equivalent for both circle and square obstacles
-    col_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=2)
+    # Cylindrical equivalent for both circle and square obstacles
+    collision_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=5)
     
     # Visual shape differs based on type
     if obs['type'] == 'circle':
-        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 2, rgbaColor=[0, 0, 1, 0.8])  # green circle
+        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 5, rgbaColor=[0.4, 0.7, 1.0, 1])  # sky blue circle
     else:  # square 
         half_side = obs['radius'] / math.sqrt(2)
-        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 2], rgbaColor=[0, 0, 1, 0.8])  # blue square
+        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 4], rgbaColor=[1.0, 0.5, 0.0, 1] )  # orange square
 
     body_id = p.createMultiBody(
         baseMass = 0.0,  # static
-        baseCollisionShapeIndex = col_shape,
+        baseCollisionShapeIndex = collision_shape,
         baseVisualShapeIndex = visual_shape,
         basePosition = pos_3d
     )
@@ -79,8 +91,8 @@ for d_obs in dynamic_obstacles:
 
     initial_pos = d_obs['trajectory'][0][0:2].tolist() + [0.1]
     
-    collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=d_obs['radius'])
-    visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=d_obs['radius'], length = 0.2, rgbaColor=[1, 1, 0, 0.8])  
+    collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=d_obs['radius'], height=2)
+    visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=d_obs['radius'], length = 2, rgbaColor=[1.0, 0.4, 0.9, 1])    
     
     body_id = p.createMultiBody(
         baseMass=0,
@@ -91,6 +103,71 @@ for d_obs in dynamic_obstacles:
     dyn_body_ids.append(body_id)
 
 all_obstacle_ids = stat_body_ids + dyn_body_ids
+
+
+# Create arena walls
+WALL_HEIGHT = 2.0 
+WALL_THICKNESS = 0.5
+WALL_OFFSET = 6.0  
+
+ARENA_MIN = 0 - WALL_OFFSET
+ARENA_MAX = 40 + WALL_OFFSET
+ARENA_CENTER = (ARENA_MAX + ARENA_MIN) / 2
+ARENA_SIZE = ARENA_MAX - ARENA_MIN
+
+
+WALL_COLOR = [0.7, 0.5, 0.3, 1]
+
+
+south_collision = p.createCollisionShape(
+    p.GEOM_BOX, 
+    halfExtents=[ARENA_SIZE/2 + WALL_THICKNESS, WALL_THICKNESS/2, WALL_HEIGHT/2]
+)
+south_visual = p.createVisualShape(
+    p.GEOM_BOX,
+    halfExtents=[ARENA_SIZE/2 + WALL_THICKNESS, WALL_THICKNESS/2, WALL_HEIGHT/2],
+    rgbaColor=WALL_COLOR
+)
+south_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=south_collision,
+    baseVisualShapeIndex=south_visual,
+    basePosition=[ARENA_CENTER, ARENA_MIN, WALL_HEIGHT/2]
+)
+
+
+north_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=south_collision,  
+    baseVisualShapeIndex=south_visual,
+    basePosition=[ARENA_CENTER, ARENA_MAX, WALL_HEIGHT/2]
+)
+
+west_collision = p.createCollisionShape(
+    p.GEOM_BOX,
+    halfExtents=[WALL_THICKNESS/2, ARENA_SIZE/2, WALL_HEIGHT/2]
+)
+west_visual = p.createVisualShape(
+    p.GEOM_BOX,
+    halfExtents=[WALL_THICKNESS/2, ARENA_SIZE/2, WALL_HEIGHT/2],
+    rgbaColor=WALL_COLOR
+)
+west_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=west_collision,
+    baseVisualShapeIndex=west_visual,
+    basePosition=[ARENA_MIN, ARENA_CENTER, WALL_HEIGHT/2]
+)
+
+east_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=west_collision,  
+    baseVisualShapeIndex=west_visual,
+    basePosition=[ARENA_MAX, ARENA_CENTER, WALL_HEIGHT/2]
+)
+
+wall_ids = [south_wall, north_wall, west_wall, east_wall]
+all_obstacle_ids.extend(wall_ids)
 
 
 # Simulation engine (state update)
@@ -193,9 +270,15 @@ for d_obs in dynamic_obstacles:
 # mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon=mpc_horizon, dt=mpc_dt)
 
 # Final simulation setup
-goal_tolerance = 0.3
+goal_tolerance = 1.3 # meters
 
 # Debug visualization setup
+start_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.6, 
+                                       rgbaColor=[0, 1, 0, 0.8])
+start_body = p.createMultiBody(baseMass=0, 
+                                baseVisualShapeIndex=start_marker, 
+                                basePosition=[0, 0, 0.3])
+
 goal_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.5, rgbaColor=[0, 1, 0, 0.8])
 goal_body = p.createMultiBody(baseMass=0, baseVisualShapeIndex=goal_marker, basePosition=[goal[0], goal[1], 0.1])
 
@@ -246,7 +329,7 @@ def draw_rrt_path(controller, pybullet_client):
         wp_marker = pybullet_client.createVisualShape(
             pybullet_client.GEOM_SPHERE,
             radius=0.4,
-            rgbaColor=[1, 0, 1, 1.0]  # Magenta, fully opaque
+            rgbaColor=[0.13, 0.55, 0.13, 1]   # Magenta, fully opaque
         )
         wp_body = pybullet_client.createMultiBody(
             baseMass=0,
@@ -318,6 +401,10 @@ def save_simulation_log(log_data):
 
 # ======= Main Loop =======
 def __main__():
+
+    # Camera mode selection: "overhead" or "first_person"
+    # camera_mode = "first_person"        # TODO: change camera mode here
+    camera_mode = "overhead"
 
     # Initialize car state
     car_state = np.array([0.0, 0.0, 1.0, np.radians(45)])  # x, y, v, psi
@@ -527,6 +614,16 @@ def __main__():
         car_pos = [car_state[0], car_state[1], 0.1]
         car_orn = p.getQuaternionFromEuler([0, 0, car_state[3]])
         p.resetBasePositionAndOrientation(car_id, car_pos, car_orn)
+
+        # Update camera view
+        if camera_mode == "first_person":
+            cam_dist = 15.0
+            # cam_x = car_state[0] - cam_dist * math.cos(car_state[3])
+            # cam_y = car_state[1] - cam_dist * math.sin(car_state[3])
+            # cam_z = 18.0
+
+            p.resetDebugVisualizerCamera(cameraDistance= cam_dist, cameraYaw= -45, 
+                                        cameraPitch=-35, cameraTargetPosition=[car_state[0], car_state[1], 0.5])
 
         # Compute distances for debug
         dist_to_goal = math.hypot(car_state[0] - goal[0], car_state[1] - goal[1])
