@@ -42,19 +42,19 @@ stat_body_ids = []
 for obs in static_obstacles:
     pos_3d = list(obs['position']) + [0.1] # z = 0.1
 
-    # Spherical equivalent for both circle and square obstacles
-    col_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=2)
+    # Cylindrical equivalent for both circle and square obstacles
+    collision_shape = p.createCollisionShape(p.GEOM_CYLINDER, radius=obs['radius'], height=5)
     
     # Visual shape differs based on type
     if obs['type'] == 'circle':
-        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 2, rgbaColor=[0, 0, 1, 0.8])  # green circle
+        visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=obs['radius'], length = 5, rgbaColor=[0.4, 0.7, 1.0, 1])  # sky blue circle
     else:  # square 
         half_side = obs['radius'] / math.sqrt(2)
-        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 2], rgbaColor=[0, 0, 1, 0.8])  # blue square
+        visual_shape = p.createVisualShape(p.GEOM_BOX, halfExtents=[half_side, half_side, 4], rgbaColor=[1.0, 0.5, 0.0, 1] )  # orange square
 
     body_id = p.createMultiBody(
         baseMass = 0.0,  # static
-        baseCollisionShapeIndex = col_shape,
+        baseCollisionShapeIndex = collision_shape,
         baseVisualShapeIndex = visual_shape,
         basePosition = pos_3d
     )
@@ -68,8 +68,8 @@ for d_obs in dynamic_obstacles:
 
     initial_pos = d_obs['trajectory'][0][0:2].tolist() + [0.1]
     
-    collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=d_obs['radius'])
-    visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=d_obs['radius'], length = 0.2, rgbaColor=[1, 1, 0, 0.8])  
+    collision_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=d_obs['radius'], height=2)
+    visual_shape = p.createVisualShape(p.GEOM_CYLINDER, radius=d_obs['radius'], length = 2, rgbaColor=[1.0, 0.4, 0.9, 1])    
     
     body_id = p.createMultiBody(
         baseMass=0,
@@ -80,6 +80,70 @@ for d_obs in dynamic_obstacles:
     dyn_body_ids.append(body_id)
 
 all_obstacle_ids = stat_body_ids + dyn_body_ids
+
+# Create arena walls
+WALL_HEIGHT = 2.0 
+WALL_THICKNESS = 0.5
+WALL_OFFSET = 6.0  
+
+ARENA_MIN = 0 - WALL_OFFSET
+ARENA_MAX = 40 + WALL_OFFSET
+ARENA_CENTER = (ARENA_MAX + ARENA_MIN) / 2
+ARENA_SIZE = ARENA_MAX - ARENA_MIN
+
+
+WALL_COLOR = [0.7, 0.5, 0.3, 1]
+
+
+south_collision = p.createCollisionShape(
+    p.GEOM_BOX, 
+    halfExtents=[ARENA_SIZE/2 + WALL_THICKNESS, WALL_THICKNESS/2, WALL_HEIGHT/2]
+)
+south_visual = p.createVisualShape(
+    p.GEOM_BOX,
+    halfExtents=[ARENA_SIZE/2 + WALL_THICKNESS, WALL_THICKNESS/2, WALL_HEIGHT/2],
+    rgbaColor=WALL_COLOR
+)
+south_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=south_collision,
+    baseVisualShapeIndex=south_visual,
+    basePosition=[ARENA_CENTER, ARENA_MIN, WALL_HEIGHT/2]
+)
+
+
+north_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=south_collision,  
+    baseVisualShapeIndex=south_visual,
+    basePosition=[ARENA_CENTER, ARENA_MAX, WALL_HEIGHT/2]
+)
+
+west_collision = p.createCollisionShape(
+    p.GEOM_BOX,
+    halfExtents=[WALL_THICKNESS/2, ARENA_SIZE/2, WALL_HEIGHT/2]
+)
+west_visual = p.createVisualShape(
+    p.GEOM_BOX,
+    halfExtents=[WALL_THICKNESS/2, ARENA_SIZE/2, WALL_HEIGHT/2],
+    rgbaColor=WALL_COLOR
+)
+west_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=west_collision,
+    baseVisualShapeIndex=west_visual,
+    basePosition=[ARENA_MIN, ARENA_CENTER, WALL_HEIGHT/2]
+)
+
+east_wall = p.createMultiBody(
+    baseMass=0,
+    baseCollisionShapeIndex=west_collision,  
+    baseVisualShapeIndex=west_visual,
+    basePosition=[ARENA_MAX, ARENA_CENTER, WALL_HEIGHT/2]
+)
+
+wall_ids = [south_wall, north_wall, west_wall, east_wall]
+all_obstacle_ids.extend(wall_ids)
 
 
 # Simulation engine (state update)
@@ -180,10 +244,16 @@ for d_obs in dynamic_obstacles:
 
 mpc_controller = MPC(static_obstacles, cur_dyn_obs_MPC, horizon=mpc_horizon, dt=mpc_dt)
 
-# Final simulation setup
+# Goal tolerance
 goal_tolerance = 0.3
 
 # Debug visualization setup
+start_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.6, 
+                                       rgbaColor=[0, 1, 0, 0.8])
+start_body = p.createMultiBody(baseMass=0, 
+                                baseVisualShapeIndex=start_marker, 
+                                basePosition=[0, 0, 0.3])
+
 goal_marker = p.createVisualShape(p.GEOM_SPHERE, radius=0.5, rgbaColor=[0, 1, 0, 0.8])
 goal_body = p.createMultiBody(baseMass=0, baseVisualShapeIndex=goal_marker, basePosition=[goal[0], goal[1], 0.1])
 
@@ -250,7 +320,11 @@ def save_simulation_log(log_data):
 
 # ======= Main Loop =======
 def __main__():
-
+    
+    # Camera mode selection: "overhead" or "first_person"
+    # camera_mode = "first_person"        # TODO: change camera mode here
+    camera_mode = "overhead"
+ 
     # Initialize car state
     car_state = np.array([0.0, 0.0, 1.0, np.radians(45)])  # x, y, v, psi
     last_traversed_pos = car_state[0:2].copy()
@@ -427,28 +501,40 @@ def __main__():
         car_orn = p.getQuaternionFromEuler([0, 0, car_state[3]])
         p.resetBasePositionAndOrientation(car_id, car_pos, car_orn)
 
-        # ===== Visualize Traversed and Predicted Paths =====
+        # Update camera view
+        if camera_mode == "first_person":
+            cam_dist = 15.0
+            # cam_x = car_state[0] - cam_dist * math.cos(car_state[3])
+            # cam_y = car_state[1] - cam_dist * math.sin(car_state[3])
+            # cam_z = 18.0
+
+            p.resetDebugVisualizerCamera(cameraDistance= cam_dist, cameraYaw= -45, 
+                                        cameraPitch=-35, cameraTargetPosition=[car_state[0], car_state[1], 0.5])
+
+
+        # ===== Visualize Traversed and Predicted Paths in Overhead Mode =====
         # Clear previous predicted path
-        for item in predicted_path_visuals:
-            p.removeUserDebugItem(item)
-        predicted_path_visuals.clear()
+        if camera_mode == "overhead":
+            for item in predicted_path_visuals:
+                p.removeUserDebugItem(item)
+            predicted_path_visuals.clear()
 
-        # Draw new predicted path
-        if step % 5 == 0:  # update every 5 steps
-            if len(mpc_predicted_traj) > 1:
-                try:
-                    for i in range(min(len(mpc_predicted_traj) - 1, 10)):
-                        p_start = [mpc_predicted_traj[i][0], mpc_predicted_traj[i][1], 0.1]
-                        p_end = [mpc_predicted_traj[i+1][0], mpc_predicted_traj[i+1][1], 0.1]
-                        line_id = p.addUserDebugLine(p_start, p_end, [0.5, 0, 0.5], 2, lifeTime = 0.3) # Purple line
-                        predicted_path_visuals.append(line_id)
-                except:
-                    pass
+            # Draw new predicted path
+            if step % 2 == 0:  # update every 1 step
+                if len(mpc_predicted_traj) > 1:
+                    try:
+                        for i in range(min(len(mpc_predicted_traj) - 1, 10)):
+                            p_start = [mpc_predicted_traj[i][0], mpc_predicted_traj[i][1], 0.1]
+                            p_end = [mpc_predicted_traj[i+1][0], mpc_predicted_traj[i+1][1], 0.1]
+                            line_id = p.addUserDebugLine(p_start, p_end, [0.5, 0, 0.5], 2, lifeTime = 0.2) # Purple line
+                            predicted_path_visuals.append(line_id)
+                    except:
+                        pass
 
-        # Draw traversed path
+        # # Draw traversed path
         current_pos = car_state[0:2]
         
-        line_id = p.addUserDebugLine([last_traversed_pos[0], last_traversed_pos[1], 0.1], 
+        p.addUserDebugLine([last_traversed_pos[0], last_traversed_pos[1], 0.1], 
                                     [current_pos[0], current_pos[1], 0.1], 
                                     [0, 0.5, 0], 5) # Green line
             

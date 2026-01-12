@@ -91,7 +91,7 @@ class MPC:
         self.ocp.solver_options.qp_solver_iter_max = 600
         self.ocp.solver_options.nlp_solver_max_iter = 500  # More iterations for convergence
         self.ocp.solver_options.tol = 1e-5  # Tighter tolerance
-        self.ocp.solver_options.qp_solver_cond_N = 10  # partial condensing
+        self.ocp.solver_options.qp_solver_cond_N = 50  # partial condensing
         
         # Regularization for numerical stability
         self.ocp.solver_options.levenberg_marquardt = 1e-2

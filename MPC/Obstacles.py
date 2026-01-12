@@ -5,7 +5,7 @@ from Config import max_steps, controller_dt, sim_dt, sim_speed, vehicle_radius
 
 barrel_radius = 1.2  # radius of barrel obstacles
 block_radius = 1.4   # radius of block obstacles
-human_radius = 1.0   # radius of humans (dynamic obstacles)
+human_radius = 0.8   # radius of humans (dynamic obstacles)
 
 # Static obstacle parameters  
 static_obstacles = []
@@ -66,7 +66,7 @@ def add_random_static(static_obstacles, max_obstacles = 18):
 
     return static_obstacles
 
-static_obstacles = add_random_static(static_obstacles, max_obstacles = 7)
+static_obstacles = add_random_static(static_obstacles, max_obstacles = 10)
 
 
 
@@ -105,9 +105,9 @@ def is_traj_collision_free(candidate_traj, static_obs, existing_dyn_obs, radius)
             
     return True
 
-num_dynamic_needed = 8  # dynamic obstacles
+num_dynamic_needed = 10  # dynamic obstacles
 attempts = 0
-max_total_attempts = 1500
+max_total_attempts = 3500
 
 while len(dynamic_obstacles) < num_dynamic_needed and attempts < max_total_attempts:
     attempts += 1
