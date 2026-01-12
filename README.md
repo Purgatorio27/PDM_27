@@ -187,14 +187,4 @@ JSON files with detailed simulation data for each run, including trajectory, con
 - Contains plots summarizing the results of the comprehensive benchmark, such as success rate, collision rate, and computation time.
 - `summary_table.csv`: Tabular results of the benchmark.
 
-## Key Parameters
-
-| Parameter | Value | Location |
-|-----------|-------|----------|
-| Start position | (0, 0) | Config.py |
-| Goal position | (40, 40) | Config.py |
-| Max speed | 4.0 m/s | Config.py |
-| MPC horizon | 60 steps | Config.py |
-| MPC dt | 0.25 s | Config.py |
-| Controller dt | 0.05 s | Config.py |
 
