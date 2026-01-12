@@ -6,7 +6,7 @@ Autonomous vehicle path planning using RRT*, MPC, and hybrid RRT*+MPC approaches
 
 ### System Requirements
 - Python 3.10+
-- Linux (tested on WSL2)
+- Linux (tested on Ubuntu 22.04。5 LTS jammy)
 - ACADOS solver (installed separately)
 
 ### Python Dependencies
@@ -42,17 +42,14 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/acados/lib
 ## Quick Start
 
 ```bash
-# Activate virtual environment
-source venv/bin/activate
+# Run RRT*+MPC simulation (GUI)
+python MPC/Main_loop_MPC_RRT.py
 
 # Run Pure MPC simulation (GUI)
-cd MPC && bash run_simulation.sh
+python MPC/Main_loop.py
 
-# Run RRT*+MPC simulation (GUI)
-cd MPC && bash run_simulation_rrt.sh
-
-# Run mass benchmark (headless, 100 trials each)
-cd mass_bench && python run_mass_benchmark.py
+# Run comprehensive benchmark (headless)
+python run_comprehensive_benchmark.py
 ```
 
 ## File Structure
@@ -60,51 +57,47 @@ cd mass_bench && python run_mass_benchmark.py
 ```
 PDM_27/
 ├── MPC/                          # MPC controller and simulations
-│   ├── Config.py                 # Vehicle and simulation parameters
-│   ├── MPC_core.py               # ACADOS MPC solver implementation
-│   ├── MPC_RRT.py                # RRT*+MPC hybrid controller
 │   ├── Main_loop.py              # Pure MPC simulation loop
 │   ├── Main_loop_MPC_RRT.py      # RRT*+MPC simulation loop
+│   ├── MPC_core.py               # ACADOS MPC solver implementation
+│   ├── MPC_core_lighthouse_nav.py# MPC ‘lighthouse’ mode (no reference path)
+│   ├── MPC_RRT.py                # RRT*+MPC hybrid controller
+│   ├── Config.py                 # Vehicle and simulation parameters
 │   ├── Obstacles.py              # Obstacle generation, save/load
-│   ├── Environment.py            # PyBullet environment setup
-│   ├── run_simulation.sh         # Run pure MPC
-│   ├── run_simulation_rrt.sh     # Run RRT*+MPC
-│   ├── saved_obstacles.json      # Saved obstacle config (shared)
-│   └── c_generated_code/         # ACADOS generated C code
+│   ├── Environment.py            # PyBullet environment for MPC
+│   ├── Trajectory_generator_obs.py # Obstacle trajectory generation
+│   ├── analyze_log.py            # Script to analyze simulation logs
+│   ├── check_log.py              # Script to check logs
+│   ├── debug_mpc.py              # Debugging script for MPC
+│   ├── quick_analysis.py         # Quick analysis script
+│   ├── test_dynamics.py          # Script for testing vehicle dynamics
+│   └── saved_obstacles.json      # Saved obstacle config (shared)
 │
 ├── RRTStar/                      # RRT* path planner
 │   ├── RRTStar.py                # RRT* algorithm implementation
+│   ├── main.py                   # Standalone RRT* runner
 │   ├── KinematicBicycleModelRRT.py  # Vehicle kinematics for RRT
 │   ├── Environment.py            # PyBullet environment for RRT
-│   ├── main.py                   # Standalone RRT* runner
 │   └── utils.py                  # Utility functions
-│
-├── comparison/                   # Single-run comparison scripts
-│   ├── rrt_comparison.py         # Pure RRT* benchmark
-│   ├── mpc_comparison.py         # Pure MPC benchmark
-│   ├── mpc_rrt_comparison.py     # RRT*+MPC benchmark
-│   ├── run_dynamic_mpc.py        # MPC with dynamic obstacles
-│   ├── run_dynamic_mpc_rrt.py    # RRT*+MPC with dynamic obstacles
-│   ├── analyze_comparison.py     # Analyze benchmark results
-│   └── visualize_trajectories.py # Plot trajectory comparisons
-│
-├── mass_bench/                   # Mass benchmarking (100 trials)
-│   ├── run_mass_benchmark.py     # Main benchmark runner
-│   ├── generate_plots.py         # Generate report plots
-│   ├── run_benchmark.sh          # Bash runner script
-│   ├── results/                  # CSV/JSON results
-│   └── plots/                    # Generated plots
 │
 ├── Environment/                  # Shared environment utilities
 │   ├── environment.py            # Base environment class
 │   └── maze_layouts.py           # Predefined obstacle layouts
 │
+├── comparison/                   # Single-run comparison scripts
+│   ├── rrt_comparison.py         # Pure RRT* benchmark
+│   ├── mpc_comparison.py         # Pure MPC benchmark
+│   ├── mpc_rrt_comparison.py     # RRT*+MPC benchmark
+│   ├── analyze_comparison.py     # Analyze benchmark results
+│   └── visualize_trajectories.py # Plot trajectory comparisons
+│
 ├── logs/                         # Simulation logs (JSON)
-├── c_generated_code/             # Root-level ACADOS code
-├── venv/                         # Python virtual environment
-├── ALGO.md                       # Algorithm documentation
-├── PROJECT.md                    # This file
-└── requirements.txt              # Python dependencies
+├── benchmark_plots/              # Plots from benchmarks
+│
+├── run_benchmark.sh              # Runs a series of comparison scripts
+├── run_comprehensive_benchmark.py # Main benchmark runner
+├── generate_benchmark_plots.py   # Generate report plots from benchmark data
+└── README.md                     # This file
 ```
 
 ## Core Components
@@ -148,70 +141,60 @@ Obstacle management:
 
 ### Pure MPC (with GUI)
 ```bash
-cd MPC
-bash run_simulation.sh
+python MPC/Main_loop.py
 ```
 
 ### RRT*+MPC (with GUI)
 ```bash
-cd MPC
-bash run_simulation_rrt.sh
+python MPC/Main_loop_MPC_RRT.py
 ```
 
 ### Headless Mode
-Add `--headless` flag in shell scripts or set `gui=False` in code.
+Add the `--headless` flag to run any simulation without the GUI:
+```bash
+python MPC/Main_loop.py --headless
+python MPC/Main_loop_MPC_RRT.py --headless
+```
 
 ### Map Sharing
-1. Run `run_simulation_rrt.sh` first - generates random map and saves to `saved_obstacles.json`
-2. Run `run_simulation.sh` - loads the same map for comparison
+1. Run `python MPC/Main_loop_MPC_RRT.py` first - it generates a random map and saves it to `MPC/saved_obstacles.json`.
+2. Run `python MPC/Main_loop.py` - it will load the same map for a direct comparison.
 
 ## Benchmarking
 
-### Mass Benchmark (100 trials)
+### Comprehensive Benchmark (headless)
+This script runs a comprehensive benchmark for multiple algorithms and scenarios.
 ```bash
-cd mass_bench
-python run_mass_benchmark.py
+python run_comprehensive_benchmark.py
 ```
+Check the script for configuration options. Results and plots are saved in the `benchmark_plots/` directory.
 
-Generates:
-- `results/benchmark_results_final.csv`: Raw trial data
-- `results/summary_statistics.json`: Aggregated metrics
-- `plots/`: Visualization (success rate, path length, efficiency, computation time)
-
-### Single Comparisons
+### Single Comparisons (headless by default)
+These scripts run a single trial for each specified algorithm.
 ```bash
 cd comparison
-python rrt_comparison.py      # Pure RRT*
-python mpc_comparison.py      # Pure MPC
-python mpc_rrt_comparison.py  # RRT*+MPC
+python rrt_comparison.py
+python mpc_comparison.py
+python mpc_rrt_comparison.py
 ```
 
 ## Output Files
 
 ### Logs (`logs/`)
-JSON files with simulation data:
-- `trajectory`: Vehicle path points
-- `controls`: Applied steering and acceleration
-- `summary`: Success, path length, computation time
-- `planning_info`: RRT* path data (if applicable)
+JSON files with detailed simulation data for each run, including trajectory, controls, and solver performance.
 
-### Plots (`mass_bench/plots/`)
-- `success_rate.png`: Algorithm success comparison
-- `path_length_distribution.png`: Path length histograms
-- `path_efficiency_distribution.png`: Efficiency comparison
-- `computation_time.png`: Runtime comparison
-- `combined_summary.png`: Multi-panel summary
-- `summary_table.csv`: Tabular results
+### Plots (`benchmark_plots/`)
+- Contains plots summarizing the results of the comprehensive benchmark, such as success rate, collision rate, and computation time.
+- `summary_table.csv`: Tabular results of the benchmark.
 
 ## Key Parameters
 
 | Parameter | Value | Location |
 |-----------|-------|----------|
-| Start position | (2, 2) | Config.py |
-| Goal position | (36, 36) | Config.py |
-| Map size | 45 m | MPC_RRT.py |
+| Start position | (0, 0) | Config.py |
+| Goal position | (40, 40) | Config.py |
 | Max speed | 4.0 m/s | Config.py |
 | MPC horizon | 60 steps | Config.py |
 | MPC dt | 0.25 s | Config.py |
 | Controller dt | 0.05 s | Config.py |
-| Goal tolerance | 1.5 m | MPC_core.py |
+
